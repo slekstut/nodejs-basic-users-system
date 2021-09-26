@@ -6,14 +6,14 @@ const authController = require('../controllers/auth');
 
 const router = express.Router();
 
-router.put('/signup', [
+router.post('/signup', [
  body('email')
- .isEmail('email')
+ .isEmail()
  .withMessage('Please enter a valid email.')
  .custom((value, { req }) => {
   return User.findOne({ email: value }).then(userDoc => {
    if (userDoc) {
-    return Promise.reject('E-mail address already exists!');
+    return Promise.reject('Email address already exists!');
    }
   });
  })
@@ -22,7 +22,7 @@ router.put('/signup', [
   .trim()
   .not()
   .isEmpty(),
- body('name')
+ body('username')
   .trim()
   .not()
   .isEmpty()

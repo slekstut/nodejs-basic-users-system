@@ -1,5 +1,175 @@
 <template>
- <div>
-  <h1>Login page</h1>
- </div>
+  <div>
+    <h1>Login</h1>
+    <form @submit.prevent="submitSignup">
+      <div class="form__group">
+        <div class="form__input">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            v-model="authData.email"
+            :class="{ 'is-invalid': submitted && $v.authData.email.$error }"
+          />
+          <div class="error" v-if="submitted && $v.authData.email.$error">
+            <span class="error" v-if="!$v.authData.email.required">
+              Email is required.
+            </span>
+            <span class="error" v-if="!$v.authData.email.email">
+              Please enter a valid email address.
+            </span>
+          </div>
+        </div>
+        <div class="form__input">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            v-model="authData.password"
+            :class="{ 'is-invalid': submitted && $v.authData.password.$error }"
+          />
+          <div class="error" v-if="submitted && $v.authData.password.$error">
+            <span class="error" v-if="!$v.authData.password.required">
+              Please enter a password.
+            </span>
+            <span class="error" v-if="!$v.authData.password.minLength">
+              Password must be not less
+              {{ $v.authData.password.$params.minLength.min }} letters.
+            </span>
+          </div>
+        </div>
+        <span class="successMsg">{{ successMsg }}</span>
+        <button type="submit" class="btn__button">
+          Login
+        </button>
+      </div>
+    </form>
+  </div>
 </template>
+
+<script>
+import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
+export default {
+  data() {
+    return {
+      authData: {
+        username: "",
+        email: "",
+        password: "",
+        cPassword: "",
+      },
+      submitted: false,
+      successMsg: "",
+    };
+  },
+  validations: {
+    authData: {
+      username: {
+        required,
+        minLength: minLength(5),
+      },
+      email: {
+        required,
+        email,
+      },
+      password: {
+        required,
+        minLength: minLength(5),
+      },
+      cPassword: {
+        required,
+        sameAsPassword: sameAs("password"),
+      },
+    },
+  },
+  methods: {
+    submitSignup() {
+      console.log("submit!");
+      this.submitted = true;
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return; // stop here if form is invalid
+      }
+      this.authData.username = "";
+      this.authData.email = "";
+      this.authData.password = "";
+      this.authData.cPassword = "";
+      this.$v.$reset();
+      this.successMsg = "You Signup Successfully!";
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+$font-color: #05386b;
+$light-green: #5cdb95;
+$darker-green: #379683;
+$white: #edf5e1;
+$green: #8ee4af;
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10vh 5vw;
+  .successMsg {
+    color: $darker-green;
+    margin: 1.2em 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .form__input {
+    width: 30em;
+    display: flex;
+    flex-direction: column;
+    margin: 0.8em 0;
+    label {
+      font-size: 1.2rem;
+      color: $font-color;
+      text-align: left;
+      padding-bottom: 0.2em;
+    }
+    input {
+      padding: 0.5em;
+      font-size: 1.1rem;
+      &:focus {
+        outline: none;
+      }
+    }
+    .error {
+      color: red;
+      text-align: left;
+      margin-top: 0.2em;
+      font-size: 0.8rem;
+    }
+  }
+  .btn__button {
+    width: 30em;
+    height: 4em;
+    background: $darker-green;
+    color: $white;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2em;
+    margin-top: 2em;
+    letter-spacing: 0.1em;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+  }
+}
+
+.is-invalid {
+  border: 1px solid red;
+  color: red;
+}
+</style>

@@ -2,7 +2,7 @@
   <div class="app">
     <Main />
     <router-link class="link__to" :to="{ name: 'Signup' }">Signup</router-link>
-    <router-link to="/login">Login</router-link>
+    <router-link class="link__to" to="/login">Login</router-link>
     <router-view></router-view>
   </div>
 </template>
@@ -35,6 +35,11 @@ $green: #8ee4af;
   margin-top: 60px;
   .link__to {
     margin-right: 1em;
+    font-size: 1.2rem;
+    &:hover {
+    color: $darker-green;
   }
+  }
+  
 }
 </style>
