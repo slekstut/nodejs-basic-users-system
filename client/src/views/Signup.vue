@@ -93,7 +93,7 @@
             </span>
           </div>
         </div>
-        <span class="successMsg">{{ successMsg }}</span>
+        <span class="successMsg" v-if="successMsg">{{ successMsg }}</span>
         <span class="error" v-if="errorMsg">{{ errorMsg }}</span>
         <button type="submit" class="btn__button">
           Signup
@@ -152,15 +152,16 @@ export default {
         .post("http://localhost:3000/auth/signup", this.authData)
         .then((res) => {
           console.log(res.data);
-          // this.authData.username = "";
-          // this.authData.email = "";
-          // this.authData.password = "";
-          // this.authData.cPassword = "";
+          this.authData.username = "";
+          this.authData.email = "";
+          this.authData.password = "";
+          this.authData.cPassword = "";
           this.$v.$reset();
           this.successMsg = res.data.message;
           setTimeout(() => {
             this.successMsg = "";
-          }, 3000);
+            this.$router.push({ path: "/login" });
+          }, 1500);
         })
         .catch((err) => {
           console.log(err.response.data.data[0].msg);
@@ -180,6 +181,8 @@ $light-green: #5cdb95;
 $darker-green: #379683;
 $white: #edf5e1;
 $green: #8ee4af;
+$error-dark: #d63301;
+$error-light: #ffccba;
 
 .form__group {
   display: flex;
@@ -188,12 +191,6 @@ $green: #8ee4af;
   justify-content: space-between;
   align-items: center;
   margin: 10vh 5vw;
-  .successMsg {
-    color: $darker-green;
-    margin: 1.2em 0;
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
   .form__input {
     width: 30em;
     display: flex;
@@ -208,15 +205,10 @@ $green: #8ee4af;
     input {
       padding: 0.5em;
       font-size: 1.1rem;
+      border-radius: 10px;
       &:focus {
         outline: none;
       }
-    }
-    .error__input {
-      color: red;
-      text-align: left;
-      margin-top: 0.2em;
-      font-size: 0.8rem;
     }
   }
   .btn__button {
@@ -239,15 +231,39 @@ $green: #8ee4af;
   }
 }
 
+.successMsg {
+  color: $darker-green;
+  background-color: $light-green;
+  margin: 1.2em 0;
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 10px 0px;
+  padding: 15px 20px;
+  border-radius: 30px;
+  border: none;
+}
+
 .is-invalid {
-  border: 1px solid red;
-  color: red;
+  border: 1px solid $error-dark;
+  color: $error-dark;
 }
 
 .error {
-  color: red;
-  margin: 1.2em 0;
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 400;
+  margin: 10px 0px;
+  padding: 15px 20px;
+  color: $error-dark;
+  background-color: $error-light;
+  border-radius: 30px;
+  border: none;
+}
+
+.error__input {
+  color: $error-dark;
+  background-color: none;
+  text-align: left;
+  margin: 10px 0px;
+  font-size: 0.8rem;
 }
 </style>
