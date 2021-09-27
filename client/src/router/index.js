@@ -21,6 +21,11 @@ export default new Router ({
    path: '/signup',
    name: 'Signup',
    component: () => import('@/views/Signup.vue')
+  },
+  {
+   path: '/secret-page',
+   name: 'Secret Page',
+   component: () => import('@/views/SecretPage.vue')
   }
  ]
 })

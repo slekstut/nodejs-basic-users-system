@@ -17,7 +17,7 @@ router.post('/signup', [
    }
   });
  })
- .normalizeEmail(),
+ .normalizeEmail({ gmail_remove_dots: false }),
  body('password')
   .trim()
   .not()
@@ -28,5 +28,9 @@ router.post('/signup', [
   .isEmpty()
 ],
 authController.signup);
+
+router.post('/login', authController.login);
+
+router.get('/all-users', authController.getAll);
 
 module.exports = router;

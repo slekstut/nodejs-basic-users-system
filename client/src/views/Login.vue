@@ -12,11 +12,11 @@
             v-model="authData.email"
             :class="{ 'is-invalid': submitted && $v.authData.email.$error }"
           />
-          <div class="error__input" v-if="submitted && $v.authData.email.$error">
+          <div
+            class="error__input"
+            v-if="submitted && $v.authData.email.$error"
+          >
             <span class="error__input" v-if="!$v.authData.email.required">
-              Email is required.
-            </span>
-            <span class="error__input" v-if="!$v.authData.email.email">
               Please enter a valid email address.
             </span>
           </div>
@@ -30,13 +30,12 @@
             v-model="authData.password"
             :class="{ 'is-invalid': submitted && $v.authData.password.$error }"
           />
-          <div class="error__input" v-if="submitted && $v.authData.password.$error">
+          <div
+            class="error__input"
+            v-if="submitted && $v.authData.password.$error"
+          >
             <span class="error__input" v-if="!$v.authData.password.required">
               Please enter a password.
-            </span>
-            <span class="error__input" v-if="!$v.authData.password.minLength">
-              Password must be not less
-              {{ $v.authData.password.$params.minLength.min }} letters.
             </span>
           </div>
         </div>
@@ -51,26 +50,22 @@
 </template>
 
 <script>
-import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
+import axios from "axios";
+import { required, minLength, email } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
       authData: {
-        username: "",
         email: "",
         password: "",
-        cPassword: "",
       },
       submitted: false,
       successMsg: "",
+      errorMsg: "",
     };
   },
   validations: {
     authData: {
-      username: {
-        required,
-        minLength: minLength(5),
-      },
       email: {
         required,
         email,
@@ -78,10 +73,6 @@ export default {
       password: {
         required,
         minLength: minLength(5),
-      },
-      cPassword: {
-        required,
-        sameAsPassword: sameAs("password"),
       },
     },
   },
@@ -93,12 +84,22 @@ export default {
       if (this.$v.$invalid) {
         return; // stop here if form is invalid
       }
-      this.authData.username = "";
-      this.authData.email = "";
-      this.authData.password = "";
-      this.authData.cPassword = "";
-      this.$v.$reset();
-      this.successMsg = "You Signup Successfully!";
+      axios
+        .post("http://localhost:3000/auth/login", this.authData)
+        .then((res) => {
+          console.log(res.data);
+          this.authData.email = "";
+          this.authData.password = "";
+          this.$v.$reset();
+          setTimeout(() => {
+            this.successMsg = "You Sign in Successfully!";
+            this.$router.push({ path: "/secret-page" });
+          }, 1500);
+        })
+        .catch((err) => {
+          console.log(err.response.data.message);
+          this.errorMsg = err.response.data.message;
+        });
     },
   },
 };
