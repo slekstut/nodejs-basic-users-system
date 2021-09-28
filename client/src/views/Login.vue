@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Login</h1>
-    <form @submit.prevent="submitSignup">
+    <form @submit.prevent="submitSignin">
       <div class="form__group">
         <div class="form__input">
           <label for="email">Email</label>
@@ -51,6 +51,7 @@
 
 <script>
 import axios from "axios";
+import { eventBus } from "../main";
 import { required, minLength, email } from "vuelidate/lib/validators";
 export default {
   data() {
@@ -62,6 +63,7 @@ export default {
       submitted: false,
       successMsg: "",
       errorMsg: "",
+      token: ''
     };
   },
   validations: {
@@ -77,7 +79,7 @@ export default {
     },
   },
   methods: {
-    submitSignup() {
+    submitSignin() {
       console.log("submit!");
       this.submitted = true;
       this.$v.$touch();
@@ -87,13 +89,16 @@ export default {
       axios
         .post("http://localhost:3000/auth/login", this.authData)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
+          // console.log('token from login page ' + res.data.token);
+          this.token = res.data.token;
+          eventBus.$emit('sendtoken', this.token);
           this.authData.email = "";
           this.authData.password = "";
           this.$v.$reset();
           setTimeout(() => {
             this.successMsg = "You Sign in Successfully!";
-            this.$router.push({ path: "/secret-page" });
+            this.$router.push({ path: "/auth/all-users" });
           }, 1500);
         })
         .catch((err) => {

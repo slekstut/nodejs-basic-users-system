@@ -8,7 +8,7 @@
     </p>
     <h3>List of users</h3>
     <div class="users__list" v-if="users.length > 0">
-      <ul v-for="(user, userId) in users" :key="userId">
+      <ul v-for="(user, index) in users" :key="index">
         <li><b>User name:</b> {{ user.username }}</li>
         <li><b>User email:</b> {{ user.email }}</li>
         <li><b>User ID:</b> {{ user._id }}</li>
@@ -21,6 +21,7 @@
 
 <script>
 import axios from "axios";
+import { eventBus } from "../main";
 
 export default {
   name: "SecretPage",
@@ -30,15 +31,22 @@ export default {
     };
   },
   mounted() {
-    axios
-      .get("http://localhost:3000/auth/all-users")
-      .then((res) => {
-        this.users = res.data.users;
-        console.log(this.users);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    eventBus.$on("sendtoken", (token) => {
+      axios
+        .get("http://localhost:3000/auth/all-users", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log(token)
+          console.log(response.data.users);
+          this.users = response.data.users;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   },
 };
 </script>
