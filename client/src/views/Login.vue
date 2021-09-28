@@ -89,10 +89,7 @@ export default {
       axios
         .post("http://localhost:3000/auth/login", this.authData)
         .then((res) => {
-          // console.log(res.data);
-          // console.log('token from login page ' + res.data.token);
           this.token = res.data.token;
-          
           this.authData.email = "";
           this.authData.password = "";
           this.$v.$reset();

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="users__container">
     <h1>Secret page</h1>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
@@ -8,8 +8,8 @@
     </p>
     <h3>List of users</h3>
     <div class="users__list" v-if="users.length > 0">
-      <ul v-for="(user, index) in users" :key="index">
-        <li><b>User name:</b> {{ user.username }}</li>
+      <ul display__users v-for="(user, index) in users" :key="index">
+        <li ><b>User name:</b> {{ user.username }}</li>
         <li><b>User email:</b> {{ user.email }}</li>
         <li><b>User ID:</b> {{ user._id }}</li>
         <li><b>User role:</b> {{ user.role }}</li>
@@ -31,7 +31,7 @@ export default {
     };
   },
   created() {
-    let self = this
+    let self = this;
     eventBus.$on("sendtoken", (token) => {
       axios
         .get("http://localhost:3000/auth/all-users", {
@@ -40,7 +40,7 @@ export default {
           },
         })
         .then((response) => {
-          console.log(token)
+          console.log(token);
           console.log(response.data.users);
           self.users = response.data.users;
         })
@@ -53,13 +53,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.users__list {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  ul {
-    li {
-      text-align: left;
+.users__container {
+  margin: 15vh 15vw;
+    overflow-x: hidden;
+  .users__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 3px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "display__users display__users display__users"
+    "display__users display__users display__users"
+    ". . .";
+
+  .display__users { grid-area: display__users; }
+    ul {
+      li {
+        text-align: left;
+      }
     }
   }
 }
