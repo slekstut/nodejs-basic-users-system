@@ -30,7 +30,8 @@ export default {
       users: [],
     };
   },
-  mounted() {
+  created() {
+    let self = this
     eventBus.$on("sendtoken", (token) => {
       axios
         .get("http://localhost:3000/auth/all-users", {
@@ -41,7 +42,7 @@ export default {
         .then((response) => {
           console.log(token)
           console.log(response.data.users);
-          this.users = response.data.users;
+          self.users = response.data.users;
         })
         .catch((err) => {
           console.log(err);

@@ -63,7 +63,7 @@ export default {
       submitted: false,
       successMsg: "",
       errorMsg: "",
-      token: ''
+      token: "",
     };
   },
   validations: {
@@ -92,14 +92,15 @@ export default {
           // console.log(res.data);
           // console.log('token from login page ' + res.data.token);
           this.token = res.data.token;
-          eventBus.$emit('sendtoken', this.token);
+          
           this.authData.email = "";
           this.authData.password = "";
           this.$v.$reset();
-          setTimeout(() => {
-            this.successMsg = "You Sign in Successfully!";
-            this.$router.push({ path: "/auth/all-users" });
-          }, 1500);
+          this.successMsg = "You Sign in Successfully!";
+          this.$router.push({ path: "/auth/all-users" });
+          this.$nextTick(() => {
+            eventBus.$emit("sendtoken", this.token);
+          });
         })
         .catch((err) => {
           console.log(err.response.data.message);
