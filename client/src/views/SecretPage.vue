@@ -7,12 +7,12 @@
       vero?
     </p>
     <h3>List of users</h3>
-    <div class="users__list" v-if="users.length > 0">
-      <ul display__users v-for="(user, index) in users" :key="index">
-        <li ><b>User name:</b> {{ user.username }}</li>
-        <li><b>User email:</b> {{ user.email }}</li>
-        <li><b>User ID:</b> {{ user._id }}</li>
-        <li><b>User role:</b> {{ user.role }}</li>
+    <div class="users__list" v-if="data.length > 0">
+      <ul display__users v-for="(e, index) in data" :key="index">
+        <li><b>User name:</b> {{ e.username }}</li>
+        <li><b>User email:</b> {{ e.email }}</li>
+        <li><b>User ID:</b> {{ e._id }}</li>
+        <li><b>User role:</b> {{ e.role }}</li>
       </ul>
     </div>
     <div v-else>No users found in the database.</div>
@@ -27,27 +27,33 @@ export default {
   name: "SecretPage",
   data() {
     return {
-      users: [],
+      data: [],
     };
   },
-  created() {
-    let self = this;
-    eventBus.$on("sendtoken", (token) => {
-      axios
-        .get("http://localhost:3000/auth/all-users", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          console.log(token);
-          console.log(response.data.users);
-          self.users = response.data.users;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+  methods: {
+    loadUsers() {
+      this.data = JSON.parse(localStorage.getItem("apiData"));
+      eventBus.$on("sendtoken", (token) => {
+        axios
+          .get("http://localhost:3000/auth/all-users", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            console.log(token);
+            console.log(res.data);
+            localStorage.setItem("apiData", JSON.stringify(res.data.users));
+            this.data = res.data.users;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    },
+  },
+  mounted() {
+    this.loadUsers();
   },
 };
 </script>
@@ -55,19 +61,21 @@ export default {
 <style scoped lang="scss">
 .users__container {
   margin: 15vh 15vw;
-    overflow-x: hidden;
+  overflow-x: hidden;
   .users__list {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: 3px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "display__users display__users display__users"
-    "display__users display__users display__users"
-    ". . .";
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 3px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "display__users display__users display__users"
+      "display__users display__users display__users"
+      ". . .";
 
-  .display__users { grid-area: display__users; }
+    .display__users {
+      grid-area: display__users;
+    }
     ul {
       li {
         text-align: left;
