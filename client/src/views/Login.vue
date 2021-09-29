@@ -53,6 +53,8 @@
 import axios from "axios";
 import { eventBus } from "../main";
 import { required, minLength, email } from "vuelidate/lib/validators";
+import { mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -79,14 +81,15 @@ export default {
     },
   },
   methods: {
-    submitSignin() {
+    ...mapMutations(["setUser", "setToken"]),
+    async submitSignin() {
       console.log("submit!");
       this.submitted = true;
       this.$v.$touch();
       if (this.$v.$invalid) {
-        return; // stop here if form is invalid
+        return;
       }
-      axios
+      const response = await axios
         .post("http://localhost:3000/auth/login", this.authData)
         .then((res) => {
           this.token = res.data.token;
@@ -103,10 +106,15 @@ export default {
           console.log(err.response.data.message);
           this.errorMsg = err.response.data.message;
         });
+        const { user, token } = await response.json();
+          this.setUser(user);
+          this.setToken(token);
+          
     },
   },
 };
 </script>
+
 
 <style lang="scss">
 $font-color: #05386b;
