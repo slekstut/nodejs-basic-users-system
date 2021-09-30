@@ -23,11 +23,6 @@ export default new Router ({
    component: () => import('@/views/Signup.vue')
   },
   {
-   path: '/logout',
-   name: 'Logout',
-   component: () => import('@/views/Logout.vue')
-  },
-  {
    path: '/auth/all-users',
    name: 'Secret Page',
    component: () => import('@/views/SecretPage.vue')

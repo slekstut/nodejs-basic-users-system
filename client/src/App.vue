@@ -4,26 +4,29 @@
     <router-link :to="{ name: 'Signup' }"
       ><button class="btn__button">Signup</button></router-link
     >
-    <router-link v-if="isLoggedIn" to="/login"
+    <router-link to="/login"
       ><button class="btn__button">Login</button></router-link
     >
-    <router-link v-if="!isLoggedIn" to="/logout"
-      ><button class="btn__button">Logout</button></router-link
-    >
+    <button class="btn__button" @click="logout">Logout</button>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 import Main from "./components/Main.vue";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
   name: "App",
   components: {
     Main,
   },
+  methods: {
+    logout() {
+      this.$router.push("/login");
+    },
+  },
   computed: {
-    ...mapGetters(["isLoggedIn"]),
+    // ...mapGetters(["isLoggedIn"]),
   },
 };
 </script>

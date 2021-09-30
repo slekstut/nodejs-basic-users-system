@@ -2,8 +2,6 @@
   <div>
     <h1>Signup</h1>
     <form
-      action="http://localhost:3000/auth/signup"
-      method="POST"
       @submit.prevent="submitSignup"
     >
       <div class="form__group">
@@ -105,7 +103,6 @@
 
 <script>
 import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
-import axios from "axios";
 
 export default {
   data() {
@@ -142,34 +139,22 @@ export default {
     },
   },
   methods: {
-    submitSignup() {
+    async submitSignup() {
       this.submitted = true;
       this.$v.$touch();
       if (this.$v.$invalid) {
-        return; // stop here if form is invalid
+        return; 
       }
-      axios
-        .post("http://localhost:3000/auth/signup", this.authData)
-        .then((res) => {
-          console.log(res.data);
-          this.authData.username = "";
-          this.authData.email = "";
-          this.authData.password = "";
-          this.authData.cPassword = "";
-          this.$v.$reset();
-          this.successMsg = res.data.message;
-          setTimeout(() => {
-            this.successMsg = "";
-            this.$router.push({ path: "/login" });
-          }, 1500);
-        })
-        .catch((err) => {
-          console.log(err.response.data.data[0].msg);
-          this.errorMsg = err.response.data.data[0].msg;
-          setTimeout(() => {
-            this.errorMsg = "";
-          }, 3000);
+      try {
+        await this.$store.dispatch('signup', {
+          username: this.authData.username,
+          email: this.authData.email,
+          password: this.authData.password
         });
+      } catch (err) {
+        console.log(err);
+        this.error = err.message;
+      }
     },
   },
 };

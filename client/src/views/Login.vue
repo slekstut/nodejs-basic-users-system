@@ -50,10 +50,9 @@
 </template>
 
 <script>
-import axios from "axios";
-import { eventBus } from "../main";
+// import axios from "axios";
 import { required, minLength, email } from "vuelidate/lib/validators";
-import { mapMutations } from "vuex";
+// import { mapMutations } from "vuex";
 
 export default {
   data() {
@@ -81,7 +80,6 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["setUser", "setToken"]),
     async submitSignin() {
       console.log("submit!");
       this.submitted = true;
@@ -89,32 +87,19 @@ export default {
       if (this.$v.$invalid) {
         return;
       }
-      const response = await axios
-        .post("http://localhost:3000/auth/login", this.authData)
-        .then((res) => {
-          this.token = res.data.token;
-          this.authData.email = "";
-          this.authData.password = "";
-          this.$v.$reset();
-          this.successMsg = "You Sign in Successfully!";
-          this.$router.push({ path: "/auth/all-users" });
-          this.$nextTick(() => {
-            eventBus.$emit("sendtoken", this.token);
-          });
-        })
-        .catch((err) => {
-          console.log(err.response.data.message);
-          this.errorMsg = err.response.data.message;
+      try {
+        await this.$store.dispatch('login', {
+          email: this.authData.email,
+          password: this.authData.password
         });
-        const { user, token } = await response.json();
-          this.setUser(user);
-          this.setToken(token);
-          
+      } catch (err) {
+        console.log(err);
+        this.error = err.message;
+      }
     },
   },
 };
 </script>
-
 
 <style lang="scss">
 $font-color: #05386b;

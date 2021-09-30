@@ -20,8 +20,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import { eventBus } from "../main";
+// import axios from "axios";
 
 export default {
   name: "SecretPage",
@@ -31,29 +30,27 @@ export default {
     };
   },
   methods: {
-    loadUsers() {
-      this.data = JSON.parse(localStorage.getItem("apiData"));
-      eventBus.$on("sendtoken", (token) => {
-        axios
-          .get("http://localhost:3000/auth/all-users", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            console.log(token);
-            console.log(res.data);
-            localStorage.setItem("apiData", JSON.stringify(res.data.users));
-            this.data = res.data.users;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
-    },
+    // loadUsers() {
+    //   this.data = JSON.parse(localStorage.getItem("apiData"));
+    //     axios
+    //       .get("http://localhost:3000/auth/all-users", {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`,
+    //         },
+    //       })
+    //       .then((res) => {
+    //         console.log(token);
+    //         console.log(res.data);
+    //         localStorage.setItem("apiData", JSON.stringify(res.data.users));
+    //         this.data = res.data.users;
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    // },
   },
   mounted() {
-    this.loadUsers();
+    // this.loadUsers();
   },
 };
 </script>
