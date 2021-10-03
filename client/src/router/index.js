@@ -4,7 +4,7 @@ import Main from '@/components/Main.vue';
 
 Vue.use(Router);
 
-export default new Router ({
+const router = new Router ({
  mode: 'history',
  routes: [
   {
@@ -30,3 +30,16 @@ export default new Router ({
   { path: '*', redirect: '/' }
  ]
 })
+
+router.beforeEach((to, from, next) => {
+ const publicPages = ['/', '/login', '/signup'];
+ const authRequired = !publicPages.includes(to.path);
+
+ if (authRequired) {
+  return next('/login')
+ }
+
+ next();
+});
+
+export default router;

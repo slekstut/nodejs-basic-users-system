@@ -1,7 +1,7 @@
-import Vue from 'vue'
+import Vue from 'vue';
 import Vuex from "vuex";
-import App from './App.vue'
-import router from './router'
+import App from './App.vue';
+import router from './router/index.js';
 import Vuelidate from 'vuelidate'
 import store from "./store/index.js";
 
