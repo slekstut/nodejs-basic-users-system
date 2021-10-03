@@ -1,32 +1,35 @@
 <template>
   <div class="app">
-    <Main />
     <router-link :to="{ name: 'Signup' }"
       ><button class="btn__button">Signup</button></router-link
     >
     <router-link to="/login"
-      ><button class="btn__button">Login</button></router-link
+      ><button class="btn__button" @click="login" v-if="!isAuth">Login</button></router-link
     >
-    <button class="btn__button" @click="logout">Logout</button>
+    <button class="btn__button" @click="logout" v-if="isAuth">Logout</button>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Main from "./components/Main.vue";
-// import { mapGetters } from "vuex";
 export default {
   name: "App",
   components: {
-    Main,
   },
   methods: {
+    login() {
+      this.$store.dispatch('login');
+    },
     logout() {
-      this.$router.push("/login");
+      this.$store.dispatch('logout');
+      this.$router.replace('/');
     },
   },
   computed: {
     // ...mapGetters(["isLoggedIn"]),
+    isAuth() {
+      return this.$store.getters.userIsAuthenticated;
+    }
   },
 };
 </script>

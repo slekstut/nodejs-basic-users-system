@@ -9,8 +9,9 @@ export default {
   await axios.post('http://localhost:3000/auth/login', data)
    .then(res => {
     console.log(res.data);
-    context.commit('setUser', {
-     userId: res.data.userId,
+    context.commit('setAuth', {
+     // userId: res.data.userId,
+     isAuth: true
     });
    })
    .catch(err => {
@@ -37,5 +38,25 @@ export default {
     const error = new Error(err.message || 'Failed to authenticate. Check your login data.');
     throw error;
    });
+ },
+ async loadUsers(context) {
+  const token = context.getters.token;
+  await axios.get('http://localhost:3000/auth/all-users', {
+   headers: {
+    Authorization: `Bearer ${token}`
+   }
+  }).then(res => {
+   console.log(res.data);
+   context.commit('setUsers', {
+    users: res.data,
+   });
+  }).catch(err => {
+   console.log(err);
+  })
+ },
+ logout(context) {
+  context.commit('setAuth', {
+   isAuth: false
+  })
  }
 };

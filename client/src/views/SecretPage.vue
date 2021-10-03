@@ -30,27 +30,19 @@ export default {
     };
   },
   methods: {
-    // loadUsers() {
-    //   this.data = JSON.parse(localStorage.getItem("apiData"));
-    //     axios
-    //       .get("http://localhost:3000/auth/all-users", {
-    //         headers: {
-    //           Authorization: `Bearer ${token}`,
-    //         },
-    //       })
-    //       .then((res) => {
-    //         console.log(token);
-    //         console.log(res.data);
-    //         localStorage.setItem("apiData", JSON.stringify(res.data.users));
-    //         this.data = res.data.users;
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    // },
+    async loadUsers() {
+      // this.data = JSON.parse(localStorage.getItem("apiData"));
+       try {
+         await this.$store.dispatch('loadUsers', {
+           users: this.data
+         })
+       } catch (err) {
+         console.log(err);
+       }
+    },
   },
   mounted() {
-    // this.loadUsers();
+    this.loadUsers();
   },
 };
 </script>

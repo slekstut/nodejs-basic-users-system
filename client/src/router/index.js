@@ -26,6 +26,7 @@ export default new Router ({
    path: '/auth/all-users',
    name: 'Secret Page',
    component: () => import('@/views/SecretPage.vue')
-  }
+  },
+  { path: '*', redirect: '/' }
  ]
 })
