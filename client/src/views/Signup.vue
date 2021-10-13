@@ -151,6 +151,7 @@ export default {
           email: this.authData.email,
           password: this.authData.password
         });
+        this.$router.push('/login');
       } catch (err) {
         console.log(err);
         this.error = err.message;
