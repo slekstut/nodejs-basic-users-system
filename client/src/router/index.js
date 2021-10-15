@@ -24,24 +24,29 @@ const router = new Router({
                 import ('@/views/Signup.vue')
         },
         {
-            path: '/auth/all-users',
+            path: '/users',
             name: 'Secret Page',
             component: () =>
-                import ('@/views/SecretPage.vue')
+                import ('@/views/SecretPage.vue'),
+            meta: {
+                requiresAuth: true
+            }
         },
         { path: '*', redirect: '/' }
     ]
 })
 
-// router.beforeEach((to, from, next) => {
-//  const publicPages = ['/', '/login', '/signup'];
-//  const authRequired = !publicPages.includes(to.path);
-
-//  if (authRequired) {
-//   return next('/login')
-//  }
-
-//  next();
-// });
+router.beforeEach((to, _from, next) => {
+    const isLoggedIn = localStorage.getItem('token');
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (isLoggedIn) {
+            next()
+            return
+        }
+        next('/login')
+    } else {
+        next()
+    }
+})
 
 export default router;

@@ -32,6 +32,6 @@ router.post('/signup', [
 
 router.post('/login', authController.login);
 
-router.get('/all-users', isAuth, authController.getAll);
+router.get('/users', isAuth, authController.getUsers);
 
 module.exports = router;
