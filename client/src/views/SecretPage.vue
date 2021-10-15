@@ -6,16 +6,20 @@
       vero quibusdam vel optio. Quis quaerat, odit aliquid libero molestiae
       vero?
     </p>
+    <div v-if="allUsers.length > 0">
     <h3>List of users</h3>
-    <div class="users__list" v-if="data.length > 0">
-      <ul display__users v-for="(e, index) in data" :key="index">
-        <li><b>User name:</b> {{ e.username }}</li>
-        <li><b>User email:</b> {{ e.email }}</li>
-        <li><b>User ID:</b> {{ e._id }}</li>
-        <li><b>User role:</b> {{ e.role }}</li>
+    <div class="users__list">
+      <ul display__users v-for="user in allUsers" :key="user.id">
+        <li><b>User name:</b> {{ user.username }}</li>
+        <li><b>User email:</b> {{ user.email }}</li>
+        <li><b>User ID:</b> {{ user._id }}</li>
+        <li><b>User role:</b> {{ user.role }}</li>
       </ul>
     </div>
-    <div v-else>No users found in the database.</div>
+    </div>
+    <div v-else>
+      <p>No users found in database!</p>
+    </div>
   </div>
 </template>
 
@@ -25,25 +29,16 @@
 export default {
   name: "SecretPage",
   data() {
-    return {
-      data: [],
-    };
+    return {};
   },
-  methods: {
-    async loadUsers() {
-      // this.data = JSON.parse(localStorage.getItem("apiData"));
-       try {
-         await this.$store.dispatch('loadUsers', {
-           users: this.data
-         })
-       } catch (err) {
-         console.log(err);
-       }
-    },
+  computed: {
+    allUsers() {
+      return this.$store.getters.allUsers;
+    }
   },
   mounted() {
-    this.loadUsers();
-  },
+    this.$store.dispatch("getUsers");
+  }
 };
 </script>
 

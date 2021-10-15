@@ -3,14 +3,15 @@ import actions from './actions.js';
 import getters from './getters.js';
 
 export default {
-  state() {
-    return {
-      userId: null,
-      token: null,
-      isLoggedIn: false
-    };
-  },
-  mutations,
-  actions,
-  getters
+    state() {
+        return {
+            userId: null,
+            token: null || localStorage.getItem('token'),
+            isLoggedIn: false,
+            users: []
+        };
+    },
+    mutations,
+    actions,
+    getters
 };

@@ -1,14 +1,6 @@
 export default {
- userId(state) {
-   return state.userId;
- },
- token(state) {
-   return state.token;
- },
- users(state) {
-   return state.users;
- },
- userIsAuthenticated(state) {
-   return state.isLoggedIn;
- }
+    userId: state => state.userId,
+    token: state => state.token,
+    allUsers: state => state.users,
+    userIsAuthenticated: state => state.isLoggedIn
 };
