@@ -24,12 +24,12 @@ const router = new Router({
                 import ('@/views/Signup.vue')
         },
         {
-            path: '/users',
-            name: 'Secret Page',
+            path: '/home',
+            name: 'Home',
             component: () =>
-                import ('@/views/SecretPage.vue'),
+                import ('@/views/Home.vue'),
             meta: {
-                requiresAuth: true
+                requiresAuth: false
             }
         },
         { path: '*', redirect: '/' }

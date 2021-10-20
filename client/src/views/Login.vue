@@ -80,9 +80,8 @@ export default {
     },
   },
   methods: {
-    // ...mapMutations(["setUser", "setToken"])
+    // ...mapMutations(["setUser", "setAuth"])
     async submitSignin() {
-      console.log("submit!");
       this.submitted = true;
       this.$v.$touch();
       if (this.$v.$invalid) {
@@ -93,7 +92,7 @@ export default {
           email: this.authData.email,
           password: this.authData.password
         });
-          this.$router.replace('/users');
+          this.$router.push('/home');
       } catch (err) {
         console.log(err);
         this.error = err.message;

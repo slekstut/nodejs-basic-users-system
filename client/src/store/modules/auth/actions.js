@@ -13,11 +13,17 @@ export default {
             .then(res => {
                 console.log(res.data);
                 console.log("res.data from login(token?): " + res.data.token);
-                localStorage.setItem("token", JSON.stringify(res.data.token));
+                if (res.data.token) {
+                    localStorage.setItem("token", JSON.stringify(res.data.token));
+                }
                 context.commit("setAuth", {
                     // userId: res.data.userId,
                     isAuth: true,
                     token: res.data.token
+                });
+                context.commit("setUser", {
+                    // userId: res.data.userId,
+                    user: res.data.user
                 });
             })
             .catch(err => {
@@ -51,14 +57,17 @@ export default {
                 throw error;
             });
     },
-    async getUsers({ commit }) {
+    async getUsers({ commit, state }) {
         await axios
-            .get(API_URL + "users", { headers: { "Authorization": "Bearer " + this.token } })
+            .get(API_URL + "users", {
+                headers: {
+                    'Authorization': `Bearer ${state.token}`
+                }
+            })
             .then(res => {
-                console.log(res.data, this);
-                console.log("res data nd trhis above");
-                const users = res.data.users;
-                commit("SET_USERS", users);
+                commit("getUsers", {
+                    users: res.data.users
+                });
                 console.log(res.data.users);
             })
             .catch(err => {
