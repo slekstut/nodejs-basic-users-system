@@ -24,10 +24,10 @@ const router = new Router({
                 import ('@/views/Signup.vue')
         },
         {
-            path: '/home',
-            name: 'Home',
+            path: '/users',
+            name: 'Users',
             component: () =>
-                import ('@/views/Home.vue'),
+                import ('@/views/Users.vue'),
             meta: {
                 requiresAuth: false
             }

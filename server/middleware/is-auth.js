@@ -6,7 +6,7 @@ const authenticateJWT = (req, res, next) => {
     // console.log(token);
 
     const { authorization } = req.headers;
-    const [, token] = Authorization.split(' ');
+    const [, token] = authorization.split(' ');
 
     if (!token) {
         return res.status(403).send("A token is required for authentication");

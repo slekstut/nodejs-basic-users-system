@@ -68,6 +68,7 @@ export default {
                 commit("getUsers", {
                     users: res.data.users
                 });
+                console.log('cn log from action js: ');
                 console.log(res.data.users);
             })
             .catch(err => {

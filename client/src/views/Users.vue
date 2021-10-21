@@ -1,13 +1,18 @@
 <template>
   <div class="users__container">
-    <h1>Secret page</h1>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
-      vero quibusdam vel optio. Quis quaerat, odit aliquid libero molestiae
-      vero?
-    </p>
-    <button @click="allUsers">View all users</button>
-    <div v-if="allUsers.length > 0">
+    <div class="users__text">
+      <h1>Secret page</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
+        vero quibusdam vel optio. Quis quaerat, odit aliquid libero molestiae
+        vero?
+      </p>
+      <button @click="showUsers = !showUsers">
+        <span v-if="!showUsers">View All Users</span
+        ><span v-if="showUsers">Hide All Users</span>
+      </button>
+    </div>
+    <div v-if="showUsers">
       <h3>List of users</h3>
       <div class="users__list">
         <ul display__users v-for="user in allUsers" :key="user.id">
@@ -18,41 +23,32 @@
         </ul>
       </div>
     </div>
-    <div v-else>
-      <p>No users found in database!</p>
-    </div>
   </div>
 </template>
 
 <script>
-// import { mapState } from "vuex";
 export default {
-  name: "Home",
+  name: "Users",
   data() {
-    return {};
+    return {
+      showUsers: false,
+      allUsers: []
+    };
   },
-  computed: {
-    // ...mapState({
-    //   token: "token"
-    // })
-  },
-  methods: {
-    allUsers() {
+  computed: {},
+  methods: {},
+  created() {
     this.$store.dispatch("getUsers");
-      return this.$store.getters.allUsers;
-
-    }
-  },
-  mounted() {
-    // this.$store.dispatch("getUsers");
+    return (this.allUsers = this.$store.getters.allUsers);
   }
 };
 </script>
 
 <style scoped lang="scss">
 .users__container {
-  margin: 15vh 15vw;
-  overflow-x: hidden;
+  .users__text {
+    margin-bottom: 3em;
+  }
   .users__list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
