@@ -29,7 +29,7 @@ const router = new Router({
             component: () =>
                 import ('@/views/Users.vue'),
             meta: {
-                requiresAuth: false
+                requiresAuth: true
             }
         },
         { path: '*', redirect: '/' }

@@ -6,7 +6,9 @@
     <div class="navbar-items">
       <ul>
         <router-link to="/"><li class="btn__button">Home</li></router-link>
-        <router-link to="/users"><li class="btn__button" v-if="isAuth">Users</li></router-link>
+        <router-link to="/users"
+          ><li class="btn__button" v-if="isAuth">Users</li></router-link
+        >
         <router-link to="/login"
           ><li @click="login" v-if="!isAuth">
             Signin
@@ -64,11 +66,12 @@ $font-color: #05386b;
       a {
         text-decoration: none;
         li {
+          text-transform: lowercase;
           list-style: none;
           margin-right: 1em;
           color: $font-color;
           &:hover {
-            opacity: .7;
+            opacity: 0.7;
           }
         }
       }

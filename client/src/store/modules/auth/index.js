@@ -9,7 +9,8 @@ export default {
             user: null,
             token: null || localStorage.getItem('token'),
             isLoggedIn: false,
-            users: []
+            users: [],
+            error: ''
         };
     },
     mutations,

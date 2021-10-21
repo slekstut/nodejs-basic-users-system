@@ -17,6 +17,9 @@
             v-if="submitted && $v.authData.email.$error"
           >
             <span class="error__input" v-if="!$v.authData.email.required">
+              Email is required.
+            </span>
+            <span class="error__input" v-if="!$v.authData.email.email">
               Please enter a valid email address.
             </span>
           </div>
@@ -34,13 +37,18 @@
             class="error__input"
             v-if="submitted && $v.authData.password.$error"
           >
+            <span class="error__input" v-if="!$v.authData.password.minLength">
+              Password must be not less
+              {{ $v.authData.password.$params.minLength.min }} letters.
+            </span>
             <span class="error__input" v-if="!$v.authData.password.required">
               Please enter a password.
             </span>
           </div>
         </div>
-        <span class="successMsg" v-if="successMsg">{{ successMsg }}</span>
-        <span class="error" v-if="errorMsg">{{ errorMsg }}</span>
+        <div v-if="getError" class="error">
+          <p>{{ getError }}</p>
+        </div>
         <button type="submit" class="btn__button">
           Login
         </button>
@@ -50,37 +58,35 @@
 </template>
 
 <script>
-// import axios from "axios";
 import { required, minLength, email } from "vuelidate/lib/validators";
-// import { mapMutations } from "vuex";
+// import mapState from "vuex";
 
 export default {
   data() {
     return {
       authData: {
         email: "",
-        password: "",
+        password: ""
       },
       submitted: false,
       successMsg: "",
       errorMsg: "",
-      token: "",
+      token: ""
     };
   },
   validations: {
     authData: {
       email: {
         required,
-        email,
+        email
       },
       password: {
         required,
-        minLength: minLength(5),
-      },
-    },
+        minLength: minLength(5)
+      }
+    }
   },
   methods: {
-    // ...mapMutations(["setUser", "setAuth"])
     async submitSignin() {
       this.submitted = true;
       this.$v.$touch();
@@ -88,17 +94,22 @@ export default {
         return;
       }
       try {
-        await this.$store.dispatch('login', {
+        await this.$store.dispatch("login", {
           email: this.authData.email,
           password: this.authData.password
         });
-          this.$router.push('/home');
+        this.$router.push("/home");
       } catch (err) {
         console.log(err);
-        this.error = err.message;
       }
-    },
+    }
   },
+  created: {
+    // ...mapState({
+    //   getError: "error"
+    // })
+  },
+
 };
 </script>
 

@@ -17,18 +17,20 @@ export default {
                     localStorage.setItem("token", JSON.stringify(res.data.token));
                 }
                 context.commit("setAuth", {
-                    // userId: res.data.userId,
                     isAuth: true,
                     token: res.data.token
                 });
                 context.commit("setUser", {
-                    // userId: res.data.userId,
                     user: res.data.user
                 });
             })
             .catch(err => {
                 localStorage.removeItem("token");
-                console.log(err);
+                console.log('response from actions js: ');
+                console.log(err.response.data.message);
+                context.commit('error', {
+                    error: err.response.data.message
+                });
                 const error = new Error(
                     err.message || "Failed to authenticate. Check your login data."
                 );

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Basic users system</h1>
-    <h3>Main page</h3>
+    <h1>Basic Users System</h1>
+    <h3>Main Page</h3>
     <p>
       Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate
       numquam cum consequuntur quos exercitationem. Id inventore voluptate
