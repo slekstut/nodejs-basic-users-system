@@ -35,7 +35,8 @@ export default {
       allUsers: []
     };
   },
-  computed: {},
+  computed: {
+  },
   methods: {},
   created() {
     this.$store.dispatch("getUsers");

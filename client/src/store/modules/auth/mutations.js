@@ -9,8 +9,8 @@ export default {
     getUsers(state, payload) {
         state.users = payload.users
     },
-    error(state, data) {
-        return state.error = data;
+    showError(state, payload) {
+        state.error = payload.error;
     }
 
 };

@@ -46,8 +46,8 @@
             </span>
           </div>
         </div>
-        <div v-if="getError" class="error">
-          <p>{{ getError }}</p>
+        <div v-if="errorMsg" class="error">
+          <p>{{ errorMsg }}</p>
         </div>
         <button type="submit" class="btn__button">
           Login
@@ -59,7 +59,6 @@
 
 <script>
 import { required, minLength, email } from "vuelidate/lib/validators";
-// import mapState from "vuex";
 
 export default {
   data() {
@@ -101,13 +100,11 @@ export default {
         this.$router.push("/home");
       } catch (err) {
         console.log(err);
+          return (this.errorMsg = this.$store.getters.error);
       }
     }
   },
-  created: {
-    // ...mapState({
-    //   getError: "error"
-    // })
+  computed: {
   },
 
 };

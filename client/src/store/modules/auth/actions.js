@@ -28,11 +28,11 @@ export default {
                 localStorage.removeItem("token");
                 console.log('response from actions js: ');
                 console.log(err.response.data.message);
-                context.commit('error', {
+                context.commit('showError', {
                     error: err.response.data.message
                 });
                 const error = new Error(
-                    err.message || "Failed to authenticate. Check your login data."
+                    err.response.data.message || "Failed to authenticate. Check your login data."
                 );
                 throw error;
             });
