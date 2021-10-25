@@ -1,36 +1,15 @@
 const express = require('express');
-const { body } = require('express-validator');
+// const { body } = require('express-validator');
 
-const User = require('../models/user');
 const authController = require('../controllers/auth');
+const validator = require('../middleware/validator');
 const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-router.post('/signup', [
-        body('email')
-        .isEmail()
-        .withMessage('Please enter a valid email.')
-        .custom((value, { req }) => {
-            return User.findOne({ email: value }).then(userDoc => {
-                if (userDoc) {
-                    return Promise.reject('Email address already exists!');
-                }
-            });
-        })
-        .normalizeEmail({ gmail_remove_dots: false }),
-        body('password')
-        .trim()
-        .not()
-        .isEmpty(),
-        body('username')
-        .trim()
-        .not()
-        .isEmpty()
-    ],
-    authController.signup);
+router.post('/signup', validator.signupUser, authController.signup);
 
-router.post('/login', authController.login);
+router.post('/login', validator.loginUser, authController.login);
 
 router.get('/users', isAuth, authController.getUsers);
 

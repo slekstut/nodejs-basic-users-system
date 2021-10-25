@@ -53,6 +53,11 @@ export default {
             })
             .catch(err => {
                 console.log(err);
+                localStorage.removeItem("token");
+                console.log(err.response.data.data[0].msg);
+                context.commit('showError', {
+                    error: err.response.data.data[0].msg
+                });
                 const error = new Error(
                     err.message || "Failed to authenticate. Check your login data."
                 );

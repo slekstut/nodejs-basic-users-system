@@ -91,7 +91,6 @@
             </span>
           </div>
         </div>
-        <span class="successMsg" v-if="successMsg">{{ successMsg }}</span>
         <span class="error" v-if="errorMsg">{{ errorMsg }}</span>
         <button type="submit" class="btn__button">
           Signup
@@ -114,7 +113,6 @@ export default {
         cPassword: "",
       },
       submitted: false,
-      successMsg: "",
       errorMsg: "",
     };
   },
@@ -155,6 +153,7 @@ export default {
       } catch (err) {
         console.log(err);
         this.error = err.message;
+        return (this.errorMsg = this.$store.getters.error);
       }
     },
   },

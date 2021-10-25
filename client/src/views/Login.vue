@@ -68,7 +68,6 @@ export default {
         password: ""
       },
       submitted: false,
-      successMsg: "",
       errorMsg: "",
       token: ""
     };
@@ -104,9 +103,6 @@ export default {
       }
     }
   },
-  computed: {
-  },
-
 };
 </script>
 

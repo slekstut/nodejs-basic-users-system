@@ -48,6 +48,9 @@ exports.signup = (req, res, next) => {
             });
         })
         .catch(err => {
+            console.log(err);
+            console.log(err.response.data.msg);
+            console.log(err.data.msg);
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
