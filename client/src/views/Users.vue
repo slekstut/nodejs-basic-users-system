@@ -12,15 +12,15 @@
         ><span v-if="showUsers">Hide All Users</span>
       </button>
     </div>
-    <div v-if="showUsers">
-      <h3>List of users</h3>
-      <div class="users__list">
-        <ul display__users v-for="user in allUsers" :key="user.id">
-          <li><b>User name:</b> {{ user.username }}</li>
-          <li><b>User email:</b> {{ user.email }}</li>
-          <li><b>User ID:</b> {{ user._id }}</li>
-          <li><b>User role:</b> {{ user.role }}</li>
-        </ul>
+    <h3>List of users</h3>
+    <div v-if="showUsers" class="users__list">
+      <div v-for="user in allUsers" :key="user.id">
+        <div class="users__item">
+          <div><b>User name:</b> {{ user.username }}</div>
+          <div><b>User email:</b> {{ user.email }}</div>
+          <div><b>User ID:</b> {{ user._id }}</div>
+          <div><b>User role:</b> {{ user.role }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -35,8 +35,7 @@ export default {
       allUsers: []
     };
   },
-  computed: {
-  },
+  computed: {},
   methods: {},
   created() {
     this.$store.dispatch("getUsers");
@@ -46,28 +45,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$darker-green: #379683;
 .users__container {
   .users__text {
     margin-bottom: 3em;
+    width: 100%;
   }
   .users__list {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 3px;
-    grid-auto-flow: row;
-    grid-template-areas:
-      "display__users display__users display__users"
-      "display__users display__users display__users"
-      ". . .";
-
-    .display__users {
-      grid-area: display__users;
-    }
-    ul {
-      li {
-        text-align: left;
-      }
+    grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
+    grid-gap: 1rem;
+    .users__item {
+      text-align: left;
+      border-bottom: 1px $darker-green solid;
+      border-left: 1px $darker-green solid;
+      padding: .6em .5em;
     }
   }
 }
