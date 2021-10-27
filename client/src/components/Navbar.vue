@@ -17,7 +17,7 @@
         <router-link to="/signup"><li v-if="!isAuth">Signup</li></router-link>
         <router-link to="/logout"
           ><li @click="logout" v-if="isAuth">
-            Logout
+            Hi {{authUser}}!<span> (Logout)</span>
           </li></router-link
         >
       </ul>
@@ -40,6 +40,9 @@ export default {
   computed: {
     isAuth() {
       return this.$store.getters.userIsAuthenticated;
+    },
+    authUser() {
+      return this.$store.getters.user.user.username;
     }
   }
 };

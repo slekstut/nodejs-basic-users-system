@@ -10,17 +10,20 @@
             name="email"
             id="email"
             v-model="authData.email"
-            :class="{ 'is-invalid': submitted && $v.authData.email.$error }"
+            :class="{ 'is-invalid': submitted && $v.authData.email.$error || errorMsg}"
           />
           <div
             class="error__input"
-            v-if="submitted && $v.authData.email.$error"
+            v-if="submitted && $v.authData.email.$error || errorMsg"
           >
             <span class="error__input" v-if="!$v.authData.email.required">
               Email is required.
             </span>
             <span class="error__input" v-if="!$v.authData.email.email">
               Please enter a valid email address.
+            </span>
+            <span class="error__input" v-if="errorMsg">
+              {{errorMsg}}
             </span>
           </div>
         </div>
@@ -96,7 +99,7 @@ export default {
           email: this.authData.email,
           password: this.authData.password
         });
-        this.$router.push("/home");
+        this.$router.push("/users");
       } catch (err) {
         console.log(err);
           return (this.errorMsg = this.$store.getters.error);

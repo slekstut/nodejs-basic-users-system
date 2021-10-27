@@ -34,7 +34,7 @@
             name="email"
             id="email"
             v-model="authData.email"
-            :class="{ 'is-invalid': submitted && $v.authData.email.$error }"
+            :class="{ 'is-invalid': submitted && $v.authData.email.$error || errorMsg}"
           />
           <div
             class="error__input"
@@ -46,6 +46,9 @@
             <span class="error__input" v-if="!$v.authData.email.email">
               Please enter a valid email address.
             </span>
+          </div>
+          <div class="error__input" v-if="errorMsg">
+            <span class="error__input">{{errorMsg}}</span>
           </div>
         </div>
         <div class="form__input">
@@ -91,7 +94,6 @@
             </span>
           </div>
         </div>
-        <span class="error" v-if="errorMsg">{{ errorMsg }}</span>
         <button type="submit" class="btn__button">
           Signup
         </button>
