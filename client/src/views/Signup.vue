@@ -34,7 +34,8 @@
             name="email"
             id="email"
             v-model="authData.email"
-            :class="{ 'is-invalid': submitted && $v.authData.email.$error || errorMsg}"
+            @input="clearErrorEmail"
+            :class="{ 'is-invalid': submitted && $v.authData.email.$error || errorMsg.email}"
           />
           <div
             class="error__input"
@@ -47,8 +48,8 @@
               Please enter a valid email address.
             </span>
           </div>
-          <div class="error__input" v-if="errorMsg">
-            <span class="error__input">{{errorMsg}}</span>
+          <div class="error__input" v-if="errorMsg.email">
+            <span class="error__input">{{errorMsg.email}}</span>
           </div>
         </div>
         <div class="form__input">
@@ -115,7 +116,9 @@ export default {
         cPassword: "",
       },
       submitted: false,
-      errorMsg: "",
+      errorMsg: {
+        email: ""
+      },
     };
   },
   validations: {
@@ -154,9 +157,13 @@ export default {
         this.$router.push('/login');
       } catch (err) {
         console.log(err);
-        this.error = err.message;
-        return (this.errorMsg = this.$store.getters.error);
+        if (this.$store.getters.error == 'Email address already exists!') {
+          this.errorMsg.email = this.$store.getters.error;
+        }
       }
+    },
+    clearErrorEmail() {
+      this.errorMsg.email = "";
     },
   },
 };

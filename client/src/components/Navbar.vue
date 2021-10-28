@@ -10,14 +10,14 @@
           ><li class="btn__button" v-if="isAuth">Users</li></router-link
         >
         <router-link to="/login"
-          ><li @click="login" v-if="!isAuth">
+          ><li v-if="!isAuth">
             Signin
           </li></router-link
         >
         <router-link to="/signup"><li v-if="!isAuth">Signup</li></router-link>
         <router-link to="/logout"
           ><li @click="logout" v-if="isAuth">
-            Hi {{authUser}}!<span> (Logout)</span>
+            Hi {{ authUser }}!<span> (Logout)</span>
           </li></router-link
         >
       </ul>
@@ -27,11 +27,8 @@
 
 <script>
 export default {
-  name: "Nabbar",
+  name: "Navbar",
   methods: {
-    login() {
-      this.$store.dispatch("login");
-    },
     logout() {
       this.$store.dispatch("logout");
       this.$router.replace("/");

@@ -9,21 +9,25 @@
             type="email"
             name="email"
             id="email"
-            v-model="authData.email"
-            :class="{ 'is-invalid': submitted && $v.authData.email.$error || errorMsg}"
+            v-model="login.email"
+            @input="clearErrorEmail"
+            :class="{
+              'is-invalid':
+                (submitted && $v.login.email.$error) || errorMsg.email
+            }"
           />
           <div
             class="error__input"
-            v-if="submitted && $v.authData.email.$error || errorMsg"
+            v-if="(submitted && $v.login.email.$error) || errorMsg.email"
           >
-            <span class="error__input" v-if="!$v.authData.email.required">
+            <span class="error__input" v-if="!$v.login.email.required">
               Email is required.
             </span>
-            <span class="error__input" v-if="!$v.authData.email.email">
+            <span class="error__input" v-if="!$v.login.email.email">
               Please enter a valid email address.
             </span>
-            <span class="error__input" v-if="errorMsg">
-              {{errorMsg}}
+            <span class="error__input">
+              {{ errorMsg.email }}
             </span>
           </div>
         </div>
@@ -33,24 +37,28 @@
             type="password"
             name="password"
             id="password"
-            v-model="authData.password"
-            :class="{ 'is-invalid': submitted && $v.authData.password.$error }"
+            v-model="login.password"
+            @input="clearErrorPassword"
+            :class="{
+              'is-invalid':
+                (submitted && $v.login.password.$error) || errorMsg.password
+            }"
           />
           <div
             class="error__input"
-            v-if="submitted && $v.authData.password.$error"
+            v-if="submitted && $v.login.password.$error & errorMsg.password"
           >
-            <span class="error__input" v-if="!$v.authData.password.minLength">
+            <span class="error__input" v-if="!$v.login.password.minLength">
               Password must be not less
-              {{ $v.authData.password.$params.minLength.min }} letters.
+              {{ $v.login.password.$params.minLength.min }} letters.
             </span>
-            <span class="error__input" v-if="!$v.authData.password.required">
+            <span class="error__input" v-if="!$v.login.password.required">
               Please enter a password.
             </span>
           </div>
-        </div>
-        <div v-if="errorMsg" class="error">
-          <p>{{ errorMsg }}</p>
+          <span class="error__input" v-if="errorMsg.password">
+            {{ errorMsg.password }}
+          </span>
         </div>
         <button type="submit" class="btn__button">
           Login
@@ -66,17 +74,20 @@ import { required, minLength, email } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
-      authData: {
+      login: {
         email: "",
         password: ""
       },
       submitted: false,
-      errorMsg: "",
+      errorMsg: {
+        email: "",
+        password: ""
+      },
       token: ""
     };
   },
   validations: {
-    authData: {
+    login: {
       email: {
         required,
         email
@@ -96,16 +107,30 @@ export default {
       }
       try {
         await this.$store.dispatch("login", {
-          email: this.authData.email,
-          password: this.authData.password
+          email: this.login.email,
+          password: this.login.password
         });
         this.$router.push("/users");
       } catch (err) {
         console.log(err);
-          return (this.errorMsg = this.$store.getters.error);
+        if (
+          this.$store.getters.error ==
+          "A user with this email could not be found."
+        ) {
+          this.errorMsg.email = this.$store.getters.error;
+        }
+        if (this.$store.getters.error == "Wrong password!") {
+          this.errorMsg.password = this.$store.getters.error;
+        }
       }
+    },
+    clearErrorEmail() {
+      this.errorMsg.email = "";
+    },
+    clearErrorPassword() {
+      this.errorMsg.password = "";
     }
-  },
+  }
 };
 </script>
 

@@ -4,12 +4,11 @@ const API_URL = "http://localhost:3000/auth/";
 
 export default {
     async login(context, payload) {
-        const data = {
-            email: payload.email,
-            password: payload.password,
-        };
         await axios
-            .post(API_URL + "login", data)
+            .post(API_URL + "login", {
+                email: payload.email,
+                password: payload.password,
+            })
             .then(res => {
                 console.log(res.data);
                 console.log("res.data from login(token?): " + res.data.token);
