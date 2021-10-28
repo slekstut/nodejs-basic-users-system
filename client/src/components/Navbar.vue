@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="logo">
-      <p>LOGO</p>
+      <router-link to="/"><img src="../../public/logo.svg" alt="basic-user-logo" /></router-link>
     </div>
     <div class="navbar-items">
       <ul>
@@ -54,15 +54,22 @@ $font-color: #05386b;
   justify-content: space-between;
   width: 100%;
   .logo {
-    margin: 0 2vw;
-    cursor: pointer;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    img {
+      margin: 0 2vw;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+    }
   }
   .navbar-items {
     margin: 0 2vw;
     ul {
+      align-items: center;
       display: flex;
       justify-content: center;
-      align-content: center;
       a {
         text-decoration: none;
         li {
