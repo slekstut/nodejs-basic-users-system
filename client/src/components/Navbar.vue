@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="logo">
-      <router-link to="/"><img src="../../public/logo.svg" alt="basic-user-logo" /></router-link>
+      <router-link to="/"><img src="../../public/users-solid.svg" alt="basic-user-logo" /></router-link>
     </div>
     <div class="navbar-items">
       <ul>

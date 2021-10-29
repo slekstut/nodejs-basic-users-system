@@ -191,7 +191,7 @@ $error-light: #ffccba;
 }
 
 .successMsg {
-  color: $darker-green;
+  color: $white;
   background-color: $light-green;
   margin: 1.2em 0;
   font-size: 1.2rem;

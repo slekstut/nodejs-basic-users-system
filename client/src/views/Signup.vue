@@ -1,5 +1,6 @@
 <template>
   <div>
+    <FlashMessage :position="'right top'"></FlashMessage>
     <h1>Signup</h1>
     <form
       @submit.prevent="submitSignup"
@@ -154,7 +155,15 @@ export default {
           email: this.authData.email,
           password: this.authData.password
         });
-        this.$router.push('/login');
+        this.flashMessage.success({
+        title: "You have been successfully registered! Please login.",
+        message: `Welcome ${this.authData.username}`,
+        time: 5000,
+        blockClass: "successMsg"
+      });
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 4000);
       } catch (err) {
         console.log(err);
         if (this.$store.getters.error == 'Email address already exists!') {
@@ -226,7 +235,7 @@ $error-light: #ffccba;
 }
 
 .successMsg {
-  color: $darker-green;
+  color: $white;
   background-color: $light-green;
   margin: 1.2em 0;
   font-size: 1.2rem;

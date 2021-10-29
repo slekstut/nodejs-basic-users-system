@@ -22,6 +22,7 @@ export default {
                 context.commit("setUser", {
                     user: res.data.user
                 });
+
             })
             .catch(err => {
                 localStorage.removeItem("token");
