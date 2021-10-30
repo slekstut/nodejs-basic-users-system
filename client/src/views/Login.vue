@@ -1,70 +1,72 @@
 <template>
   <div>
-    <h1>Login</h1>
-    <form @submit.prevent="submitSignin">
-      <div class="form__group">
-        <div class="form__input">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            v-model="login.email"
-            @input="clearErrorEmail"
-            :class="{
-              'is-invalid':
-                (submitted && $v.login.email.$error) || errorMsg.email
-            }"
-          />
-          <div
-            class="error__input"
-            v-if="(submitted && $v.login.email.$error) || errorMsg.email"
-          >
-            <span class="error__input" v-if="!$v.login.email.required">
-              Email is required.
-            </span>
-            <span class="error__input" v-if="!$v.login.email.email">
-              Please enter a valid email address.
-            </span>
-            <span class="error__input">
-              {{ errorMsg.email }}
+    <div class="form">
+      <h1>Login</h1>
+      <form @submit.prevent="submitSignin">
+        <div class="form__group">
+          <div class="form__group__input">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              v-model="login.email"
+              @input="clearErrorEmail"
+              :class="{
+                'is-invalid':
+                  (submitted && $v.login.email.$error) || errorMsg.email
+              }"
+            />
+            <div
+              class="error__input"
+              v-if="(submitted && $v.login.email.$error) || errorMsg.email"
+            >
+              <span class="error__input" v-if="!$v.login.email.required">
+                Email is required.
+              </span>
+              <span class="error__input" v-if="!$v.login.email.email">
+                Please enter a valid email address.
+              </span>
+              <span class="error__input">
+                {{ errorMsg.email }}
+              </span>
+            </div>
+          </div>
+          <div class="form__group__input">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              v-model="login.password"
+              @input="clearErrorPassword"
+              :class="{
+                'is-invalid':
+                  (submitted && $v.login.password.$error) || errorMsg.password
+              }"
+            />
+            <div
+              class="error__input"
+              v-if="submitted && $v.login.password.$error & errorMsg.password"
+            >
+              <span class="error__input" v-if="!$v.login.password.minLength">
+                Password must be not less
+                {{ $v.login.password.$params.minLength.min }} letters.
+              </span>
+              <span class="error__input" v-if="!$v.login.password.required">
+                Please enter a password.
+              </span>
+            </div>
+            <span class="error__input" v-if="errorMsg.password">
+              {{ errorMsg.password }}
             </span>
           </div>
+          <button type="submit" class="submit__button">
+            Login
+          </button>
         </div>
-        <div class="form__input">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            v-model="login.password"
-            @input="clearErrorPassword"
-            :class="{
-              'is-invalid':
-                (submitted && $v.login.password.$error) || errorMsg.password
-            }"
-          />
-          <div
-            class="error__input"
-            v-if="submitted && $v.login.password.$error & errorMsg.password"
-          >
-            <span class="error__input" v-if="!$v.login.password.minLength">
-              Password must be not less
-              {{ $v.login.password.$params.minLength.min }} letters.
-            </span>
-            <span class="error__input" v-if="!$v.login.password.required">
-              Please enter a password.
-            </span>
-          </div>
-          <span class="error__input" v-if="errorMsg.password">
-            {{ errorMsg.password }}
-          </span>
-        </div>
-        <button type="submit" class="btn__button">
-          Login
-        </button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -135,94 +137,8 @@ export default {
 </script>
 
 <style lang="scss">
-$font-color: #05386b;
-$light-green: #5cdb95;
-$darker-green: #379683;
-$white: #edf5e1;
-$green: #8ee4af;
-$error-dark: #d63301;
-$error-light: #ffccba;
+@import "../scss/basics/buttons.scss";
+@import "../scss/basics/errors.scss";
+@import "../scss/views/forms.scss";
 
-.form__group {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10vh 5vw;
-  .form__input {
-    width: 30em;
-    display: flex;
-    flex-direction: column;
-    margin: 0.8em 0;
-    label {
-      font-size: 1.2rem;
-      color: $font-color;
-      text-align: left;
-      padding-bottom: 0.2em;
-    }
-    input {
-      padding: 0.5em;
-      font-size: 1.1rem;
-      border-radius: 10px;
-      &:focus {
-        outline: none;
-      }
-    }
-  }
-  .btn__button {
-    width: 30em;
-    height: 4em;
-    background: $darker-green;
-    color: $white;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 2em;
-    margin-top: 2em;
-    letter-spacing: 0.1em;
-    &:hover {
-      cursor: pointer;
-      opacity: 0.8;
-    }
-  }
-}
-
-.successMsg {
-  color: $white;
-  background-color: $light-green;
-  margin: 1.2em 0;
-  font-size: 1.2rem;
-  font-weight: 400;
-  margin: 10px 0px;
-  padding: 15px 20px;
-  border-radius: 30px;
-  border: none;
-}
-
-.is-invalid {
-  border: 1px solid $error-dark;
-  color: $error-dark;
-}
-
-.error {
-  font-size: 1.2rem;
-  font-weight: 400;
-  margin: 10px 0px;
-  padding: 15px 20px;
-  color: $error-dark;
-  background-color: $error-light;
-  border-radius: 30px;
-  border: none;
-}
-
-.error__input {
-  color: $error-dark;
-  background-color: none;
-  text-align: left;
-  margin: 10px 0px;
-  font-size: 0.8rem;
-}
 </style>

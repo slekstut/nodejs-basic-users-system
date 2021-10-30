@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1>Basic Users System</h1>
-    <h3>Main Page</h3>
+    <h3>Home Page</h3>
+    <h5>Demo page of signup/signin users page where logged in person can see all users registered.</h5>
     <p>
       Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate
       numquam cum consequuntur quos exercitationem. Id inventore voluptate

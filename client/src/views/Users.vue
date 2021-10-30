@@ -7,19 +7,21 @@
         vero quibusdam vel optio. Quis quaerat, odit aliquid libero molestiae
         vero?
       </p>
-      <button @click="showUsers = !showUsers">
+      <button @click="showUsers = !showUsers" class="submit__button">
         <span v-if="!showUsers">View All Users</span
         ><span v-if="showUsers">Hide All Users</span>
       </button>
     </div>
-    <h3>List of users</h3>
-    <div v-if="showUsers" class="users__list">
-      <div v-for="user in allUsers" :key="user.id">
-        <div class="users__item">
-          <div><b>User name:</b> {{ user.username }}</div>
-          <div><b>User email:</b> {{ user.email }}</div>
-          <div><b>User ID:</b> {{ user._id }}</div>
-          <div><b>User role:</b> {{ user.role }}</div>
+    <div v-if="showUsers">
+      <h3>List of users</h3>
+      <div class="users__list">
+        <div v-for="user in allUsers" :key="user.id">
+          <div class="users__item">
+            <div><b>User name:</b> {{ user.username }}</div>
+            <div><b>User email:</b> {{ user.email }}</div>
+            <div><b>User ID:</b> {{ user._id }}</div>
+            <div><b>User role:</b> {{ user.role }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -45,7 +47,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$darker-green: #379683;
+@import "../scss/basics/buttons.scss";
+
 .users__container {
   .users__text {
     margin-bottom: 3em;
@@ -59,7 +62,7 @@ $darker-green: #379683;
       text-align: left;
       border-bottom: 1px $darker-green solid;
       border-left: 1px $darker-green solid;
-      padding: .6em .5em;
+      padding: 0.6em 0.5em;
     }
   }
 }

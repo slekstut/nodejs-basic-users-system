@@ -1,0 +1,12 @@
+.is-invalid {
+    border: 1px solid $error-dark;
+    color: $error-dark;
+}
+
+.error__input {
+    color: $error-dark;
+    background-color: none;
+    text-align: left;
+    margin: 10px 0px;
+    font-size: 0.8rem;
+}
