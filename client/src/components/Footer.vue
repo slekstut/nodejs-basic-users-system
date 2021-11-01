@@ -1,58 +1,33 @@
 <template>
-  <footer class="footer">
-    <div class="footer__left">
-      <h3>Company<span>logo </span></h3>
-      <p class="footer__links">
-        <a href="#" class="link-1">Home</a>
+		<footer class="footer-distributed">
 
-        <a href="#">Blog</a>
+			<div class="footer-right">
 
-        <a href="#">Pricing</a>
+				<a href="#"><i class="fa fa-facebook"></i></a>
+				<a href="#"><i class="fa fa-twitter"></i></a>
+				<a href="#"><i class="fa fa-linkedin"></i></a>
+				<a href="#"><i class="fa fa-github"></i></a>
 
-        <a href="#">About</a>
+			</div>
 
-        <a href="#">Faq</a>
+			<div class="footer-left">
 
-        <a href="#">Contact</a>
-      </p>
+				<p class="footer-links">
+					<a class="link-1" href="#">Home</a>
 
-      <p class="footer__company-name">Company Name © 2021</p>
-    </div>
+					<a href="#">Blog</a>
 
-    <div class="footer-center">
-        <font-awesome-icon icon="coffee" />
+					<a href="#">Pricing</a>
 
-      <div>
-        
-        <p><span>444 S. Cedros Ave</span> Solana Beach, California</p>
-      </div>
+					<a href="#">About</a>
 
-      <div>
-        <i class="fa fa-phone"></i>
-        <p>+1.555.555.5555</p>
-      </div>
+					<a href="#">Faq</a>
 
-      <div>
-        <i class="fa fa-envelope"></i>
-        <p><a href="mailto:support@company.com">support@company.com</a></p>
-      </div>
-    </div>
+					<a href="#">Contact</a>
+				</p>
 
-    <div class="footer-right">
-      <p class="footer-company-about">
-        <span>About the company</span>
-        Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod
-        convallis velit, eu auctor lacus vehicula sit amet.
-      </p>
-
-      <div class="footer-icons">
-        <a href="#"><i class="fa fa-facebook"></i></a>
-        <font-awesome-icon icon="facebook" />
-        <a href="#"><i class="fa fa-twitter"></i></a>
-        <a href="#"><i class="fa fa-linkedin"></i></a>
-        <a href="#"><i class="fa fa-github"></i></a>
-      </div>
-    </div>
+				<p>Company Name &copy; 2015</p>
+			</div>
   </footer>
 </template>
 
