@@ -1,33 +1,29 @@
 <template>
-		<footer class="footer-distributed">
+  <footer class="footer-distributed">
+    <div class="footer-right">
+      <a href="#"><img src="@/assets/facebook-brands.svg"/></a>
+      <a href="#"><img src="@/assets/twitter-brands.svg"/></a>
+      <a href="#"><img src="@/assets/linkedin-in-brands.svg"/></a>
+      <a href="#"><img src="@/assets/github-brands.svg"/></a>
+    </div>
 
-			<div class="footer-right">
+    <div class="footer-left">
+      <p class="footer-links">
+        <a class="link-1" href="#">Home</a>
 
-				<a href="#"><i class="fa fa-facebook"></i></a>
-				<a href="#"><i class="fa fa-twitter"></i></a>
-				<a href="#"><i class="fa fa-linkedin"></i></a>
-				<a href="#"><i class="fa fa-github"></i></a>
+        <a href="#">Blog</a>
 
-			</div>
+        <a href="#">Pricing</a>
 
-			<div class="footer-left">
+        <a href="#">About</a>
 
-				<p class="footer-links">
-					<a class="link-1" href="#">Home</a>
+        <a href="#">Faq</a>
 
-					<a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </p>
 
-					<a href="#">Pricing</a>
-
-					<a href="#">About</a>
-
-					<a href="#">Faq</a>
-
-					<a href="#">Contact</a>
-				</p>
-
-				<p>Company Name &copy; 2015</p>
-			</div>
+      <p>Company Name &copy; 2015</p>
+    </div>
   </footer>
 </template>
 
