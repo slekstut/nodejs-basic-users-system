@@ -1,0 +1,37 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    &__logo {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        img {
+            margin: 0 2vw;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+        }
+    }
+    &__links {
+        margin: 0 2vw;
+        ul {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            a {
+                text-decoration: none;
+                li {
+                    text-transform: lowercase;
+                    list-style: none;
+                    margin-right: 1em;
+                    color: $font-color;
+                    &:hover {
+                        opacity: 0.7;
+                    }
+                }
+            }
+        }
+    }
+}
