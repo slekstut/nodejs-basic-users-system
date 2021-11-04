@@ -1,4 +1,6 @@
 .form {
+    min-height: 100vh;
+    padding-top: 5em;
     &__group {
         display: flex;
         flex-direction: column;

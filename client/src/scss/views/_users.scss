@@ -1,0 +1,25 @@
+.users__container {
+    min-height: 100vh;
+    padding-top: 4em;
+    .users__text {
+        margin-bottom: 3em;
+        width: 100%;
+        h1 {
+            padding: 1em 0;
+        }
+        .submit__button {
+            margin: 3em;
+        }
+    }
+    .users__list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
+        grid-gap: 1rem;
+        .users__item {
+            text-align: left;
+            border-bottom: 1px $darker-green solid;
+            border-left: 1px $darker-green solid;
+            padding: 0.6em 0.5em;
+        }
+    }
+}

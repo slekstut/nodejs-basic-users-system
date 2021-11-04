@@ -48,22 +48,5 @@ export default {
 
 <style scoped lang="scss">
 @import "../scss/basics/buttons.scss";
-
-.users__container {
-  .users__text {
-    margin-bottom: 3em;
-    width: 100%;
-  }
-  .users__list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
-    grid-gap: 1rem;
-    .users__item {
-      text-align: left;
-      border-bottom: 1px $darker-green solid;
-      border-left: 1px $darker-green solid;
-      padding: 0.6em 0.5em;
-    }
-  }
-}
+@import "../scss/views/users.scss";
 </style>
