@@ -1,6 +1,15 @@
-.homepage-wrapper {
+.homepage {
     padding: 0 5vw;
-    .home-content {
+    &__content {
         line-height: 1.5;
+        &__paragraph {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+            gap: 1em;
+            p {
+                padding: .3em .5em;
+                line-height: 1.7;
+            }
+        }
     }
 }
