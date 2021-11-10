@@ -61,9 +61,7 @@
               {{ errorMsg.password }}
             </span>
           </div>
-          <button type="submit" class="submit__button">
-            Login
-          </button>
+          <Spinner>Login</Spinner>
         </div>
       </form>
     </div>
@@ -72,8 +70,12 @@
 
 <script>
 import { required, minLength, email } from "vuelidate/lib/validators";
+import Spinner from '../components/basic/Spinner';
 
 export default {
+  components: {
+    Spinner
+  },
   data() {
     return {
       login: {
@@ -85,7 +87,9 @@ export default {
         email: "",
         password: ""
       },
-      token: ""
+      token: "",
+      isLoading: false,
+      status: ''
     };
   },
   validations: {
@@ -102,16 +106,19 @@ export default {
   },
   methods: {
     async submitSignin() {
-      this.submitted = true;
+      this.isLoading = true;
+      this.status = 'Loading...';
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
       }
+      this.submitted = true;
       try {
         await this.$store.dispatch("login", {
           email: this.login.email,
           password: this.login.password
         });
+        this.isLoading = false;
         this.$router.push("/users");
       } catch (err) {
         console.log(err);
