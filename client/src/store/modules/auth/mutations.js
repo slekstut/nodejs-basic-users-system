@@ -11,6 +11,9 @@ export default {
     },
     showError(state, payload) {
         state.error = payload.error;
+    },
+    isLoading(state, payload) {
+        state.isLoading = payload.isLoading;
     }
 
 };

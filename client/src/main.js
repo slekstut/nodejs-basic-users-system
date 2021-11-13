@@ -4,11 +4,9 @@ import App from './App.vue';
 import router from './router/index.js';
 import Vuelidate from 'vuelidate'
 import store from "./store/index.js";
-import FlashMessage from '@smartweb/vue-flash-message';
 
 Vue.use(Vuex);
 Vue.use(Vuelidate)
-Vue.use(FlashMessage);
 
 Vue.config.productionTip = false
 

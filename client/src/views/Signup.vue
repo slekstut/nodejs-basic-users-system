@@ -1,6 +1,5 @@
 <template>
   <div>
-    <FlashMessage :position="'right bottom'"></FlashMessage>
     <div class="form">
       <h1>Signup</h1>
       <form @submit.prevent="submitSignup">
@@ -104,8 +103,12 @@
               </span>
             </div>
           </div>
-          <button type="submit" class="submit__button">
-            Signup
+          <button
+            type="submit"
+            class="submit__button"
+            :class="{ disabled: isLoading }"
+          >
+            Signup<span><SpinnerButton v-if="isLoading"></SpinnerButton></span>
           </button>
         </div>
       </form>
@@ -115,8 +118,12 @@
 
 <script>
 import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
+import SpinnerButton from "../components/basic/Spinner";
 
 export default {
+  components: {
+    SpinnerButton
+  },
   data() {
     return {
       authData: {
@@ -164,15 +171,8 @@ export default {
           email: this.authData.email,
           password: this.authData.password
         });
-        this.flashMessage.success({
-          title: "You have been successfully registered! Please login.",
-          message: `Welcome ${this.authData.username}`,
-          time: 5000,
-          blockClass: "successMsg"
-        });
-        setTimeout(() => {
-          this.$router.push("/login");
-        }, 4000);
+
+        this.$router.push("/login");
       } catch (err) {
         console.log(err);
         if (this.$store.getters.error == "Email address already exists!") {
@@ -182,6 +182,11 @@ export default {
     },
     clearErrorEmail() {
       this.errorMsg.email = "";
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.getters.isLoading;
     }
   }
 };

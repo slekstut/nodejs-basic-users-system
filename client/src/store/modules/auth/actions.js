@@ -4,10 +4,11 @@ const API_URL = "http://localhost:3000/auth/";
 
 export default {
     async login(context, payload) {
+        context.commit("isLoading", { isLoading: true });
         await axios
             .post(API_URL + "login", {
                 email: payload.email,
-                password: payload.password,
+                password: payload.password
             })
             .then(res => {
                 console.log(res.data);
@@ -22,22 +23,25 @@ export default {
                 context.commit("setUser", {
                     user: res.data.user
                 });
-
+                context.commit("isLoading", { isLoading: false });
             })
             .catch(err => {
                 localStorage.removeItem("token");
-                console.log('response from actions js: ');
+                console.log("response from actions js: ");
                 console.log(err.response.data.message);
-                context.commit('showError', {
+                context.commit("isLoading", false);
+                context.commit("showError", {
                     error: err.response.data.message
                 });
                 const error = new Error(
-                    err.response.data.message || "Failed to authenticate. Check your login data."
+                    err.response.data.message ||
+                    "Failed to authenticate. Check your login data."
                 );
                 throw error;
             });
     },
     async signup(context, payload) {
+        context.commit("isLoading", { isLoading: true });
         const data = {
             username: payload.username,
             email: payload.email,
@@ -50,12 +54,14 @@ export default {
                 context.commit("setUser", {
                     userId: res.data.userId
                 });
+                context.commit("isLoading", { isLoading: false });
             })
             .catch(err => {
                 console.log(err);
                 localStorage.removeItem("token");
                 console.log(err.response.data.data[0].msg);
-                context.commit('showError', {
+                context.commit("isLoading", { isLoading: false });
+                context.commit("showError", {
                     error: err.response.data.data[0].msg
                 });
                 const error = new Error(
@@ -68,14 +74,14 @@ export default {
         await axios
             .get(API_URL + "users", {
                 headers: {
-                    'Authorization': `Bearer ${state.token}`
+                    Authorization: `Bearer ${state.token}`
                 }
             })
             .then(res => {
                 commit("getUsers", {
                     users: res.data.users
                 });
-                console.log('cn log from action js: ');
+                console.log("cn log from action js: ");
                 console.log(res.data.users);
             })
             .catch(err => {

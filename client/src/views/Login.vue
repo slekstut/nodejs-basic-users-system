@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="form">
-      <h1>Login</h1>
+      <h1>Please Sign In</h1>
       <form @submit.prevent="submitSignin">
         <div class="form__group">
           <div class="form__group__input">
@@ -61,7 +61,9 @@
               {{ errorMsg.password }}
             </span>
           </div>
-          <Spinner>Login</Spinner>
+          <button type="submit" class="submit__button" :class="{ disabled : isLoading}">
+            Login<span><SpinnerButton v-if="isLoading"></SpinnerButton></span>
+          </button>
         </div>
       </form>
     </div>
@@ -70,11 +72,11 @@
 
 <script>
 import { required, minLength, email } from "vuelidate/lib/validators";
-import Spinner from '../components/basic/Spinner';
+import SpinnerButton from "../components/basic/Spinner";
 
 export default {
   components: {
-    Spinner
+    SpinnerButton
   },
   data() {
     return {
@@ -88,8 +90,6 @@ export default {
         password: ""
       },
       token: "",
-      isLoading: false,
-      status: ''
     };
   },
   validations: {
@@ -106,8 +106,6 @@ export default {
   },
   methods: {
     async submitSignin() {
-      this.isLoading = true;
-      this.status = 'Loading...';
       this.$v.$touch();
       if (this.$v.$invalid) {
         return;
@@ -118,7 +116,6 @@ export default {
           email: this.login.email,
           password: this.login.password
         });
-        this.isLoading = false;
         this.$router.push("/users");
       } catch (err) {
         console.log(err);
@@ -139,6 +136,11 @@ export default {
     clearErrorPassword() {
       this.errorMsg.password = "";
     }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.getters.isLoading;
+    }
   }
 };
 </script>
@@ -147,5 +149,4 @@ export default {
 @import "../scss/basics/buttons.scss";
 @import "../scss/basics/errors.scss";
 @import "../scss/views/forms.scss";
-
 </style>

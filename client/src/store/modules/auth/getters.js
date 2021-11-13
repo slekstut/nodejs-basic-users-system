@@ -4,5 +4,6 @@ export default {
     token: state => state.token,
     allUsers: state => state.users,
     userIsAuthenticated: state => state.isLoggedIn,
-    error: state => state.error
+    error: state => state.error,
+    isLoading: state => state.isLoading
 };

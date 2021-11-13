@@ -10,7 +10,8 @@ export default {
             token: null || localStorage.getItem('token'),
             isLoggedIn: false,
             users: [],
-            error: ''
+            error: '',
+            isLoading: false
         };
     },
     mutations,
