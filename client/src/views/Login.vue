@@ -61,9 +61,7 @@
               {{ errorMsg.password }}
             </span>
           </div>
-          <button type="submit" class="submit__button" :class="{ disabled : isLoading}">
-            Login<span><SpinnerButton v-if="isLoading"></SpinnerButton></span>
-          </button>
+          <Button>Login</Button>
         </div>
       </form>
     </div>
@@ -72,11 +70,11 @@
 
 <script>
 import { required, minLength, email } from "vuelidate/lib/validators";
-import SpinnerButton from "../components/basic/Spinner";
+import Button from '../components/basic/Button.vue';
 
 export default {
   components: {
-    SpinnerButton
+    Button
   },
   data() {
     return {
@@ -137,11 +135,7 @@ export default {
       this.errorMsg.password = "";
     }
   },
-  computed: {
-    isLoading() {
-      return this.$store.getters.isLoading;
-    }
-  }
+  
 };
 </script>
 

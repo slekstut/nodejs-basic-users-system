@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <Navbar />
+    <AuthLogout/>
     <router-view class="content"></router-view>
     <Footer/>
   </div>
@@ -9,17 +10,19 @@
 <script>
 import Navbar from "./components/Navbar.vue";
 import Footer from "./components/Footer.vue";
+import AuthLogout from "./components/AuthLogout.vue";
 
 export default {
   name: "App",
   components: {
     Navbar,
-    Footer
+    Footer,
+    AuthLogout
   },
   methods: {
   },
   computed: {
-  }
+  },
 };
 </script>
 

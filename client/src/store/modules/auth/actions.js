@@ -27,9 +27,8 @@ export default {
             })
             .catch(err => {
                 localStorage.removeItem("token");
-                console.log("response from actions js: ");
                 console.log(err.response.data.message);
-                context.commit("isLoading", false);
+                context.commit("isLoading", { isLoading: false });
                 context.commit("showError", {
                     error: err.response.data.message
                 });

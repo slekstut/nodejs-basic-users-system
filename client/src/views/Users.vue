@@ -15,7 +15,7 @@
     <div v-if="showUsers">
       <h3>List of users</h3>
       <div class="users__list">
-        <div v-for="user in allUsers" :key="user.id">
+        <div v-for="(user, index) in allUsers" :key="index">
           <div class="users__item">
             <div><b>User name:</b> {{ user.username }}</div>
             <div><b>User email:</b> {{ user.email }}</div>
@@ -34,15 +34,12 @@ export default {
   data() {
     return {
       showUsers: false,
-      allUsers: []
     };
   },
-  computed: {},
-  methods: {},
   created() {
-    this.$store.dispatch("getUsers");
-    return (this.allUsers = this.$store.getters.allUsers);
-  }
+      this.$store.dispatch("getUsers");
+      return this.allUsers = this.$store.getters.allUsers;
+  },
 };
 </script>
 

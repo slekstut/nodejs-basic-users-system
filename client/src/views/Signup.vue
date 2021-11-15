@@ -103,13 +103,7 @@
               </span>
             </div>
           </div>
-          <button
-            type="submit"
-            class="submit__button"
-            :class="{ disabled: isLoading }"
-          >
-            Signup<span><SpinnerButton v-if="isLoading"></SpinnerButton></span>
-          </button>
+          <Button>Signup</Button>
         </div>
       </form>
     </div>
@@ -118,11 +112,11 @@
 
 <script>
 import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
-import SpinnerButton from "../components/basic/Spinner";
+import Button from '../components/basic/Button.vue';
 
 export default {
   components: {
-    SpinnerButton
+    Button
   },
   data() {
     return {
