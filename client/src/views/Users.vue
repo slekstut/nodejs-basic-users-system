@@ -1,45 +1,72 @@
 <template>
   <div class="users__container">
     <div class="users__text">
-      <h1>Secret page</h1>
+      <h1>Welcome To Users Page</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
         vero quibusdam vel optio. Quis quaerat, odit aliquid libero molestiae
         vero?
       </p>
-      <button @click="showUsers = !showUsers" class="submit__button">
-        <span v-if="!showUsers">View All Users</span
-        ><span v-if="showUsers">Hide All Users</span>
-      </button>
+      <div @click="toggleUsers">
+        <Button class="small">
+          <span v-if="!showUsers">View All Users</span>
+          <span v-if="showUsers">Hide All Users</span>
+        </Button>
+      </div>
     </div>
     <div v-if="showUsers">
-      <h3>List of users</h3>
-      <div class="users__list">
-        <div v-for="(user, index) in allUsers" :key="index">
-          <div class="users__item">
-            <div><b>User name:</b> {{ user.username }}</div>
-            <div><b>User email:</b> {{ user.email }}</div>
-            <div><b>User ID:</b> {{ user._id }}</div>
-            <div><b>User role:</b> {{ user.role }}</div>
-          </div>
-        </div>
+      <h2>Users List</h2>
+      <div class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(user, index) in allUsers" :key="index">
+              <td>{{ user._id }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <span><a href="#"><img src="../assets/edit-regular.svg" alt="edit-icon"></a></span>
+                <span><a href="#"><img src="../assets/trash-solid.svg" alt="trash-solid"></a></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Button from "../components/basic/Button.vue";
+
 export default {
+  components: {
+    Button
+  },
   name: "Users",
   data() {
     return {
-      showUsers: false,
+      showUsers: false
     };
   },
   created() {
-      this.$store.dispatch("getUsers");
-      return this.allUsers = this.$store.getters.allUsers;
+    this.$store.dispatch("getUsers");
+    return (this.allUsers = this.$store.getters.allUsers);
   },
+  methods: {
+    toggleUsers() {
+      this.showUsers = !this.showUsers;
+    }
+  }
 };
 </script>
 

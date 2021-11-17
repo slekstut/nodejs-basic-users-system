@@ -1,76 +1,78 @@
 <template>
   <div>
     <div class="form">
-      <h1>Please Sign In</h1>
-      <form @submit.prevent="submitSignin">
-        <div class="form__group">
-          <div class="form__group__input">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              v-model="login.email"
-              @input="clearErrorEmail"
-              :class="{
-                'is-invalid':
-                  (submitted && $v.login.email.$error) || errorMsg.email
-              }"
-            />
-            <div
-              class="error__input"
-              v-if="(submitted && $v.login.email.$error) || errorMsg.email"
-            >
-              <span class="error__input" v-if="!$v.login.email.required">
-                Email is required.
-              </span>
-              <span class="error__input" v-if="!$v.login.email.email">
-                Please enter a valid email address.
-              </span>
-              <span class="error__input">
-                {{ errorMsg.email }}
+      <div class="form__container">
+        <h1>Please Sign In</h1>
+        <form @submit.prevent="submitSignin">
+          <div class="form__group">
+            <div class="form__group__input">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                v-model="login.email"
+                @input="clearErrorEmail"
+                :class="{
+                  'is-invalid':
+                    (submitted && $v.login.email.$error) || errorMsg.email
+                }"
+              />
+              <div
+                class="error__input"
+                v-if="(submitted && $v.login.email.$error) || errorMsg.email"
+              >
+                <span class="error__input" v-if="!$v.login.email.required">
+                  Email is required.
+                </span>
+                <span class="error__input" v-if="!$v.login.email.email">
+                  Please enter a valid email address.
+                </span>
+                <span class="error__input">
+                  {{ errorMsg.email }}
+                </span>
+              </div>
+            </div>
+            <div class="form__group__input">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                v-model="login.password"
+                @input="clearErrorPassword"
+                :class="{
+                  'is-invalid':
+                    (submitted && $v.login.password.$error) || errorMsg.password
+                }"
+              />
+              <div
+                class="error__input"
+                v-if="submitted && $v.login.password.$error & errorMsg.password"
+              >
+                <span class="error__input" v-if="!$v.login.password.minLength">
+                  Password must be not less
+                  {{ $v.login.password.$params.minLength.min }} letters.
+                </span>
+                <span class="error__input" v-if="!$v.login.password.required">
+                  Please enter a password.
+                </span>
+              </div>
+              <span class="error__input" v-if="errorMsg.password">
+                {{ errorMsg.password }}
               </span>
             </div>
+            <Button>Login</Button>
           </div>
-          <div class="form__group__input">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              v-model="login.password"
-              @input="clearErrorPassword"
-              :class="{
-                'is-invalid':
-                  (submitted && $v.login.password.$error) || errorMsg.password
-              }"
-            />
-            <div
-              class="error__input"
-              v-if="submitted && $v.login.password.$error & errorMsg.password"
-            >
-              <span class="error__input" v-if="!$v.login.password.minLength">
-                Password must be not less
-                {{ $v.login.password.$params.minLength.min }} letters.
-              </span>
-              <span class="error__input" v-if="!$v.login.password.required">
-                Please enter a password.
-              </span>
-            </div>
-            <span class="error__input" v-if="errorMsg.password">
-              {{ errorMsg.password }}
-            </span>
-          </div>
-          <Button>Login</Button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { required, minLength, email } from "vuelidate/lib/validators";
-import Button from '../components/basic/Button.vue';
+import Button from "../components/basic/Button.vue";
 
 export default {
   components: {
@@ -87,7 +89,7 @@ export default {
         email: "",
         password: ""
       },
-      token: "",
+      token: ""
     };
   },
   validations: {
@@ -134,8 +136,7 @@ export default {
     clearErrorPassword() {
       this.errorMsg.password = "";
     }
-  },
-  
+  }
 };
 </script>
 

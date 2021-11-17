@@ -32,11 +32,11 @@ export default {
       warningTimer: null,
       logoutTimer: null,
       warningModal: false,
-      counter: 6
+      counter: 6,
     };
   },
   mounted() {
-    if (!this.warningModal) {
+    if (!this.warningModal && this.isAuth) {
       this.events.forEach(event => {
         window.addEventListener(event, this.resetTimer);
       });
@@ -44,16 +44,17 @@ export default {
     }
   },
   destroyed() {
+    if (this.warningModal && !this.isAuth) {
     this.events.forEach(event => {
       window.removeEventListener(event, this.resetTimer);
     });
     this.resetTimer();
+    }
   },
   methods: {
     setTimers() {
-      this.warningTimer = setTimeout(this.warningMessage, 6 * 1000); // 14 minutes
-      this.logoutTimer = setTimeout(this.logoutUser, 12 * 1000); // 15min
-      // this.warningModal = false;
+      this.warningTimer = setTimeout(this.warningMessage, 14 * 60 * 1000); // [14 * 60 * 1000] 14 minutes
+      this.logoutTimer = setTimeout(this.logoutUser, 15 * 60 * 1000); // [15 * 60 * 1000] 15min
     },
     warningMessage() {
       this.warningModal = true;
@@ -83,7 +84,6 @@ export default {
     },
     closeWarning() {
       this.warningModal = false;
-      // this.counter = 6;
       this.resetTimer();
     }
   },

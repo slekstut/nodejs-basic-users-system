@@ -1,6 +1,11 @@
 <template>
-  <button type="submit" class="submit__button" :class="{ disabled: isLoading }">
-    <slot></slot><span><SpinnerButton v-if="isLoading"></SpinnerButton></span>
+  <button type="submit" class="btn instagram" :class="{ disabled: isLoading }">
+    <span :class="{ loading: isLoading }"></span>
+    <slot></slot>
+    <span class="gradient"></span>
+    <span>
+      <SpinnerButton v-if="isLoading"></SpinnerButton>
+    </span>
   </button>
 </template>
 
