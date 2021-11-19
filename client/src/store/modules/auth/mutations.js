@@ -5,6 +5,7 @@ export default {
     setAuth(state, payload) {
         state.isLoggedIn = payload.isAuth;
         state.token = payload.token;
+        state.refreshToken = payload.refreshToken;
     },
     getUsers(state, payload) {
         state.users = payload.users

@@ -1,11 +1,10 @@
 <template>
   <div class="homepage">
     <div class="homepage__content">
-      <h1>Basic Users System</h1>
-      <h3>Join - Connect To People Now!</h3>
       <h5>
-        This is <strong>demo</strong> app of signup/signin users page. Just for personal project.
+        This is a demo app of signup/signin users page. Just for personal project.
       </h5>
+      <h1>Join The Network - Get Know Great People Now!</h1>
     </div>
   </div>
 </template>

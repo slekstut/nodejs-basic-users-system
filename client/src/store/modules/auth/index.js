@@ -8,6 +8,7 @@ export default {
             userId: null,
             user: null,
             token: null || localStorage.getItem('token'),
+            refreshToken: null || localStorage.getItem('refreshToken'),
             isLoggedIn: false,
             users: [],
             error: '',

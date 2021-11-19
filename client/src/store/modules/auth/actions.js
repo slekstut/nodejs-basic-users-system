@@ -13,12 +13,15 @@ export default {
             .then(res => {
                 console.log(res.data);
                 console.log("res.data from login(token?): " + res.data.token);
-                if (res.data.token) {
+                console.log("res.data from login(refreshToken?): " + res.data.refreshToken);
+                if (res.data.token || res.data.refreshToken) {
                     localStorage.setItem("token", JSON.stringify(res.data.token));
+                    localStorage.setItem("refreshToken", JSON.stringify(res.data.refreshToken));
                 }
                 context.commit("setAuth", {
                     isAuth: true,
-                    token: res.data.token
+                    token: res.data.token,
+                    refreshToken: res.data.refreshToken,
                 });
                 context.commit("setUser", {
                     user: res.data.user
@@ -58,6 +61,7 @@ export default {
             .catch(err => {
                 console.log(err);
                 localStorage.removeItem("token");
+                localStorage.removeItem("refreshToken");
                 console.log(err.response.data.data[0].msg);
                 context.commit("isLoading", { isLoading: false });
                 context.commit("showError", {
@@ -80,8 +84,6 @@ export default {
                 commit("getUsers", {
                     users: res.data.users
                 });
-                console.log("cn log from action js: ");
-                console.log(res.data.users);
             })
             .catch(err => {
                 console.log(err);
@@ -89,6 +91,7 @@ export default {
     },
     logout(context) {
         localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
         context.commit("setAuth", {
             isAuth: false
         });

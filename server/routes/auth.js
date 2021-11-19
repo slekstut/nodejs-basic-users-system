@@ -13,4 +13,8 @@ router.post('/login', validator.loginUser, authController.login);
 
 router.get('/users', isAuth, authController.getUsers);
 
+// router.post('/token', isAuth, authController.token);
+
+// router.delete('/logout', isAuth, authController.logout);
+
 module.exports = router;

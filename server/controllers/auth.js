@@ -58,6 +58,8 @@ exports.signup = (req, res, next) => {
         });
 };
 
+let refreshTokens = []
+
 exports.login = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -84,12 +86,23 @@ exports.login = (req, res, next) => {
                 email: loadedUser.email,
                 userId: loadedUser._id.toString()
             }, process.env.JWT_SECRET_KEY, {
-                expiresIn: '30m'
+                expiresIn: '2m'
+            });
+            const refreshToken = jwt.sign({
+                email: loadedUser.email,
+                userId: loadedUser._id.toString()
+            }, process.env.JWT_REFRESH_KEY, {
+                expiresIn: '1h'
             });
             res.status(200).json({
-                user: loadedUser,
+                user: {
+                    userId: loadedUser._id,
+                    username: loadedUser.username,
+                    email: loadedUser.email,
+                    role: loadedUser.role,
+                },
                 token: token,
-                userId: loadedUser._id.toString(),
+                refreshToken: refreshToken
             });
         })
         .catch(err => {

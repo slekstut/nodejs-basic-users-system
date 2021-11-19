@@ -12,7 +12,9 @@
         <p>
           Your will be logged out in <span>{{ counter }}</span>
         </p>
-        <Button>Continue</Button>
+        <div>
+        <Button @click="closeWarning">Continue</Button>
+        </div>
       </div>
     </div>
   </div>

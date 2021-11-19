@@ -2,7 +2,7 @@
     min-height: 100vh;
     padding-top: 1em;
     &__container {
-        width: 60%;
+        width: 100%;
         margin: 0 auto;
         h1 {
             margin: 0;
@@ -13,7 +13,9 @@
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            margin: 1.5em 4em;
+            margin: 3em auto;
+            padding: 0 30%;
+            // width: 50%;
             &__input {
                 display: flex;
                 flex-direction: column;
