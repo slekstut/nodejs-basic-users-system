@@ -28,9 +28,9 @@ const router = new Router({
             name: "Users",
             component: () =>
                 import ( /*webpackChunkName: "ExperienceDetails"*/ "@/views/Users.vue"),
-            meta: {
-                requiresAuth: true
-            }
+            // meta: {
+            //     requiresAuth: true
+            // }
         },
         {
             path: "/404",
@@ -42,18 +42,18 @@ const router = new Router({
     ]
 });
 
-router.beforeEach((to, _from, next) => {
-    const token = localStorage.getItem("token");
-    console.log(token)
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (token) {
-            next();
-            return;
-        }
-        next("/login");
-    } else {
-        next();
-    }
-});
+// router.beforeEach((to, _from, next) => {
+//     const token = localStorage.getItem("accessToken");
+//     console.log(token)
+//     if (to.matched.some(record => record.meta.requiresAuth)) {
+//         if (token) {
+//             next();
+//             return;
+//         }
+//         next("/login");
+//     } else {
+//         next();
+//     }
+// });
 
 export default router;

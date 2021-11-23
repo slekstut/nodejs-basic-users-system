@@ -12,8 +12,9 @@ router.post('/signup', validator.signupUser, authController.signup);
 router.post('/login', validator.loginUser, authController.login);
 
 router.get('/users', isAuth, authController.getUsers);
+// router.get('/users', authController.getUsers);
 
-// router.post('/token', isAuth, authController.token);
+router.post('/refreshtoken', authController.refreshToken);
 
 // router.delete('/logout', isAuth, authController.logout);
 

@@ -116,7 +116,7 @@ export default {
           email: this.login.email,
           password: this.login.password
         });
-        this.$router.push("/users");
+        this.$router.push("/");
       } catch (err) {
         console.log(err);
         if (

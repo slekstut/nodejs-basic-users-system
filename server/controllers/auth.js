@@ -6,6 +6,9 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
+const tokenList = {}
+
+
 exports.getUsers = (req, res, next) => {
     User.find()
         .then(users => {
@@ -58,8 +61,6 @@ exports.signup = (req, res, next) => {
         });
 };
 
-let refreshTokens = []
-
 exports.login = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -86,24 +87,26 @@ exports.login = (req, res, next) => {
                 email: loadedUser.email,
                 userId: loadedUser._id.toString()
             }, process.env.JWT_SECRET_KEY, {
-                expiresIn: '2m'
+                expiresIn: '1m'
             });
             const refreshToken = jwt.sign({
                 email: loadedUser.email,
                 userId: loadedUser._id.toString()
             }, process.env.JWT_REFRESH_KEY, {
-                expiresIn: '1h'
+                expiresIn: '2m'
             });
-            res.status(200).json({
+            const response = {
                 user: {
                     userId: loadedUser._id,
                     username: loadedUser.username,
                     email: loadedUser.email,
                     role: loadedUser.role,
                 },
-                token: token,
+                accessToken: token,
                 refreshToken: refreshToken
-            });
+            }
+            tokenList[refreshToken] = response
+            res.status(200).json(response);
         })
         .catch(err => {
             if (!err.statusCode) {
@@ -112,3 +115,24 @@ exports.login = (req, res, next) => {
             next(err);
         });
 };
+
+exports.refreshToken = (req, res, next) => {
+    // refresh the damn token
+    const postData = req.body
+        // if refresh token exists
+    if ((postData.refreshToken) && (postData.refreshToken in tokenList)) {
+        const user = {
+            "email": postData.email,
+            "name": postData.name
+        }
+        const accessToken = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: process.env.tokenLife })
+        const response = {
+                "accessToken": accessToken,
+            }
+            // update the token in the list
+        tokenList[postData.refreshToken].accessToken = accessToken
+        res.status(200).json(response);
+    } else {
+        res.status(404).send('Invalid request')
+    }
+}

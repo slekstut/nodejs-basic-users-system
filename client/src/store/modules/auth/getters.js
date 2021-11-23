@@ -1,7 +1,7 @@
 export default {
     userId: state => state.userId,
     user: state => state.user,
-    token: state => state.token,
+    accessToken: state => state.accessToken,
     refreshToken: state => state.refreshToken,
     allUsers: state => state.users,
     userIsAuthenticated: state => state.isLoggedIn,

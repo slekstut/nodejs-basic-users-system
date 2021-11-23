@@ -6,8 +6,8 @@ export default {
     state() {
         return {
             userId: null,
-            user: null,
-            token: null || localStorage.getItem('token'),
+            user: null || JSON.parse(localStorage.getItem('user')),
+            accessToken: null || localStorage.getItem('accessToken'),
             refreshToken: null || localStorage.getItem('refreshToken'),
             isLoggedIn: false,
             users: [],

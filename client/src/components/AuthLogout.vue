@@ -66,6 +66,7 @@ export default {
     async logoutUser() {
       try {
         await this.$store.dispatch("logout");
+        this.warningModal = false;
         await this.$router.push("/");
       } catch (err) {
         console.log(err);

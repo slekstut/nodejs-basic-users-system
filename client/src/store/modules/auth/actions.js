@@ -11,25 +11,27 @@ export default {
                 password: payload.password
             })
             .then(res => {
-                console.log(res.data);
-                console.log("res.data from login(token?): " + res.data.token);
-                console.log("res.data from login(refreshToken?): " + res.data.refreshToken);
-                if (res.data.token || res.data.refreshToken) {
-                    localStorage.setItem("token", JSON.stringify(res.data.token));
-                    localStorage.setItem("refreshToken", JSON.stringify(res.data.refreshToken));
+                if (res.status === 200) {
+                    console.log('console.log from login res.data: ')
+                    console.log(res.data);
+                    console.log("res.data from login(token?): " + res.data.accessToken);
+                    console.log("res.data from login(refreshToken?): " + res.data.refreshToken);
+                    if (res.data.accessToken || res.data.refreshToken) {
+                        localStorage.setItem("accessToken", JSON.stringify(res.data.accessToken));
+                        localStorage.setItem("refreshToken", JSON.stringify(res.data.refreshToken));
+                    }
+                    context.commit("setLoggedInUser", {
+                        user: res.data.user,
+                        isLoggedIn: true,
+
+                    });
+                    context.commit('setRefreshToken', { refreshToken: res.data.refreshToken, })
+                    context.commit("setAccessToken", { accessToken: res.data.token, });
+                    context.commit("isLoading", { isLoading: false });
                 }
-                context.commit("setAuth", {
-                    isAuth: true,
-                    token: res.data.token,
-                    refreshToken: res.data.refreshToken,
-                });
-                context.commit("setUser", {
-                    user: res.data.user
-                });
-                context.commit("isLoading", { isLoading: false });
             })
             .catch(err => {
-                localStorage.removeItem("token");
+                localStorage.removeItem("accessToken");
                 console.log(err.response.data.message);
                 context.commit("isLoading", { isLoading: false });
                 context.commit("showError", {
@@ -53,7 +55,7 @@ export default {
             .post(API_URL + "signup", data)
             .then(res => {
                 console.log(res.data);
-                context.commit("setUser", {
+                context.commit("setLoggedInUser", {
                     userId: res.data.userId
                 });
                 context.commit("isLoading", { isLoading: false });
@@ -73,27 +75,45 @@ export default {
                 throw error;
             });
     },
-    async getUsers({ commit, state }) {
+    async getUsers({ commit }) {
+        const accessToken = localStorage.getItem('accessToken');
+        console.log('access toke nfrom get users: ')
+        console.log(accessToken)
         await axios
             .get(API_URL + "users", {
                 headers: {
-                    Authorization: `Bearer ${state.token}`
+                    Authorization: `Bearer ` + accessToken
                 }
             })
             .then(res => {
-                commit("getUsers", {
-                    users: res.data.users
-                });
+                if (res.status === 200) {
+                    commit("getUsers", {
+                        users: res.data.users
+                    });
+                }
             })
             .catch(err => {
                 console.log(err);
             });
     },
-    logout(context) {
-        localStorage.removeItem("token");
+    async logout(context) {
+        localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        context.commit("setAuth", {
+        context.commit("setLoggedInUser", {
             isAuth: false
         });
+    },
+    async refreshToken({ state, commit }) {
+        try {
+            await axios(API_URL + "refreshtoken", { refreshToken: state.refreshToken })
+                .then(res => {
+                    if (res.status === 200) {
+                        commit("setAccessToken", { acessToken: res.data.accessToken });
+                        commit("setLoggedInUser", { user: res.data.user });
+                    }
+                })
+        } catch (e) {
+            console.log(e);
+        }
     }
 };
