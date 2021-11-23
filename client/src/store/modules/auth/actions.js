@@ -77,7 +77,7 @@ export default {
     },
     async getUsers({ commit }) {
         const accessToken = localStorage.getItem('accessToken');
-        console.log('access toke nfrom get users: ')
+        console.log('access token from get users: ')
         console.log(accessToken)
         await axios
             .get(API_URL + "users", {
@@ -93,7 +93,9 @@ export default {
                 }
             })
             .catch(err => {
+                console.log('err from actions js users');
                 console.log(err);
+                console.log(err.data);
             });
     },
     async logout(context) {

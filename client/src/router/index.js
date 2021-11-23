@@ -24,6 +24,15 @@ const router = new Router({
                 import ( /*webpackChunkName: "ExperienceDetails"*/ "@/views/Signup.vue")
         },
         {
+            path: "/user-profile",
+            name: "UserProfile",
+            component: () =>
+                import ( /*webpackChunkName: "ExperienceDetails"*/ "@/views/UserProfile.vue"),
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
             path: "/users",
             name: "Users",
             component: () =>
@@ -42,18 +51,18 @@ const router = new Router({
     ]
 });
 
-// router.beforeEach((to, _from, next) => {
-//     const token = localStorage.getItem("accessToken");
-//     console.log(token)
-//     if (to.matched.some(record => record.meta.requiresAuth)) {
-//         if (token) {
-//             next();
-//             return;
-//         }
-//         next("/login");
-//     } else {
-//         next();
-//     }
-// });
+router.beforeEach((to, _from, next) => {
+    const token = localStorage.getItem("accessToken");
+    console.log(token)
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (token) {
+            next();
+            return;
+        }
+        next("/login");
+    } else {
+        next();
+    }
+});
 
 export default router;

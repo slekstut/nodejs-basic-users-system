@@ -116,7 +116,7 @@ export default {
           email: this.login.email,
           password: this.login.password
         });
-        this.$router.push("/");
+        this.$router.push("/user-profile");
       } catch (err) {
         console.log(err);
         if (

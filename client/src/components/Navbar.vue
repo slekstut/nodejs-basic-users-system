@@ -45,7 +45,6 @@ export default {
       return this.$store.getters.userIsAuthenticated;
     },
     authUser() {
-      console.log(this.$store.getters.user.username);
       return this.$store.getters.user.username;
     }
   }

@@ -4,18 +4,21 @@ import router from "./router/index";
 
 export default function axiosSetUp() {
     // point to your API endpoint
-    axios.defaults.baseURL = "<http://localhost:3000/auth/>";
+    axios.defaults.baseURL = "http://localhost:3000/auth/";
     // Add a request interceptor
+
     axios.interceptors.request.use(
+
         function(config) {
             // Do something before request is sent
             // use getters to retrieve the access token from vuex 
             // store
             console.log('axios.js accessToken: ')
             console.log(accessToken)
-            const accessToken = store.getters.accessToken;
-
-            // const accessToken = localStorage.getItem('accessToken');
+                // const accessToken = store.getters.accessToken;
+            console.log('config from axios.js: ');
+            console.log(config);
+            const accessToken = localStorage.getItem('accessToken');
             if (accessToken) {
                 config.headers.Authorization = `Bearer ${accessToken}`;
             }

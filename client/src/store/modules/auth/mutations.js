@@ -17,8 +17,8 @@ export default {
     setRefreshToken(state, refreshToken) {
         state.refreshToken = refreshToken;
     },
-    setAccessToken(state, accessToken) {
-        state.accessToken = accessToken;
+    setAccessToken(state, payload) {
+        state.accessToken = payload.accessToken;
     },
     setLoggedInUser(state, payload) {
         state.user = payload.user;
