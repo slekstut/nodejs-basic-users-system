@@ -37,9 +37,9 @@ const router = new Router({
             name: "Users",
             component: () =>
                 import ( /*webpackChunkName: "ExperienceDetails"*/ "@/views/Users.vue"),
-            // meta: {
-            //     requiresAuth: true
-            // }
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: "/404",

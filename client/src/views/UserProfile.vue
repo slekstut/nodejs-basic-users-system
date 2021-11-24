@@ -5,23 +5,23 @@
       <div>
         <h3>Your Account information</h3>
         <div class="table-wrapper">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-            </tr>
-          </thead>
-          <tbody>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
               <td>{{ loggedInUser.userId }}</td>
               <td>{{ loggedInUser.username }}</td>
               <td>{{ loggedInUser.email }}</td>
               <td>{{ loggedInUser.role }}</td>
-          </tbody>
-        </table>
-      </div>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

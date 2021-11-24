@@ -26,7 +26,7 @@ export default {
 
                     });
                     context.commit('setRefreshToken', { refreshToken: res.data.refreshToken, })
-                    context.commit("setAccessToken", { accessToken: res.data.token, });
+                    context.commit("setAccessToken", { accessToken: res.data.accessToken, });
                     context.commit("isLoading", { isLoading: false });
                 }
             })
@@ -82,7 +82,7 @@ export default {
         await axios
             .get(API_URL + "users", {
                 headers: {
-                    Authorization: `Bearer ` + accessToken
+                    Authorization: "Bearer " + accessToken
                 }
             })
             .then(res => {
@@ -95,27 +95,28 @@ export default {
             .catch(err => {
                 console.log('err from actions js users');
                 console.log(err);
-                console.log(err.data);
             });
     },
     async logout(context) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        localStorage.removeItem("users");
         context.commit("setLoggedInUser", {
             isAuth: false
         });
     },
-    async refreshToken({ state, commit }) {
+    refreshToken: async({ state, commit }) => {
+        const refreshUrl = API_URL + "refresh/";
         try {
-            await axios(API_URL + "refreshtoken", { refreshToken: state.refreshToken })
-                .then(res => {
-                    if (res.status === 200) {
-                        commit("setAccessToken", { acessToken: res.data.accessToken });
-                        commit("setLoggedInUser", { user: res.data.user });
+            await axios
+                .post(refreshUrl, { refresh: state.refreshToken })
+                .then(response => {
+                    if (response.status === 200) {
+                        commit("setAccessToken", response.data.accessToken);
                     }
-                })
+                });
         } catch (e) {
-            console.log(e);
+            console.log(e.response);
         }
-    }
+    },
 };

@@ -6,9 +6,6 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
-const tokenList = {}
-
-
 exports.getUsers = (req, res, next) => {
     User.find()
         .then(users => {
@@ -87,13 +84,13 @@ exports.login = (req, res, next) => {
                 email: loadedUser.email,
                 userId: loadedUser._id.toString()
             }, process.env.JWT_SECRET_KEY, {
-                expiresIn: '1m'
+                expiresIn: '6s'
             });
             const refreshToken = jwt.sign({
                 email: loadedUser.email,
                 userId: loadedUser._id.toString()
             }, process.env.JWT_REFRESH_KEY, {
-                expiresIn: '2m'
+                expiresIn: '10s'
             });
             const response = {
                 user: {
@@ -105,7 +102,6 @@ exports.login = (req, res, next) => {
                 accessToken: token,
                 refreshToken: refreshToken
             }
-            tokenList[refreshToken] = response
             res.status(200).json(response);
         })
         .catch(err => {
@@ -115,24 +111,3 @@ exports.login = (req, res, next) => {
             next(err);
         });
 };
-
-exports.refreshToken = (req, res, next) => {
-    // refresh the damn token
-    const postData = req.body
-        // if refresh token exists
-    if ((postData.refreshToken) && (postData.refreshToken in tokenList)) {
-        const user = {
-            "email": postData.email,
-            "name": postData.name
-        }
-        const accessToken = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: process.env.tokenLife })
-        const response = {
-                "accessToken": accessToken,
-            }
-            // update the token in the list
-        tokenList[postData.refreshToken].accessToken = accessToken
-        res.status(200).json(response);
-    } else {
-        res.status(404).send('Invalid request')
-    }
-}

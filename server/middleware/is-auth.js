@@ -1,24 +1,21 @@
 const jwt = require("jsonwebtoken");
 
 const authenticateJWT = async(req, res, next) => {
-
-    // const { authorization } = req.headers;
-    // const [, accessToken] = authorization.split(' ');
-    const accessToken = req.headers.authorization.split(' ')[1]
-    console.log(req.headers.authorization.split(' ')[1])
-    if (!accessToken) {
+    // const token = req.headers.authorization.split(' ')[1].replace(/^"(.*)"$/, '$1')
+    const token = req.headers.authorization.split(' ')[1]
+    if (!token) {
         return res.status(403).send("A token is required for authentication");
     }
     try {
-        console.log('accessToken from is-auth: ');
-        console.log(accessToken);
-        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
+        console.log('token from is-auth: ');
+        console.log(token);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         req.user = decoded;
 
     } catch (err) {
-        return res.status(401).send("Invalid Token");
+        return res.status(401).send("Invalid Token!!!");
     }
-    next();
+    return next();
 };
 
 module.exports = authenticateJWT;

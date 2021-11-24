@@ -32,6 +32,12 @@
             .router-link {
                 text-decoration: none;
                 list-style: none;
+                img {
+                    cursor: pointer;
+                    width: 1.6em;
+                    height: 1.6em;
+                    margin-left: 2em;
+                }
                 li {
                     display: block;
                     position: relative;
@@ -43,11 +49,6 @@
                     &:hover {
                         color: $pink;
                     }
-                    img {
-                        cursor: pointer;
-                        width: 36px;
-                        height: 36px;
-                    }
                 }
                 ul {
                     width: 7em;
@@ -56,19 +57,17 @@
                     opacity: 0;
                     position: absolute;
                     transition: all 0.5s ease;
-                    right: 2.3em;
+                    right: 1.8em;
                     margin-top: 0;
                     display: none;
                     background-color: $black;
                     padding: .7em .5em;
-                    a {
-                        li {
-                            text-decoration: none;
-                            clear: both;
-                            color: $white;
-                            margin: 0;
-                            padding-bottom: .8em;
-                        }
+                    li {
+                        text-decoration: none;
+                        clear: both;
+                        color: $white;
+                        margin: 0;
+                        padding-bottom: .8em;
                     }
                     &:hover {
                         visibility: visible;
@@ -82,9 +81,6 @@
                     display: block;
                 }
             }
-        }
-        &__dropdown-active {
-            display: none;
         }
     }
 }

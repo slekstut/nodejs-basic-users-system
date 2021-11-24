@@ -4,12 +4,14 @@ import App from './App.vue';
 import router from './router/index.js';
 import Vuelidate from 'vuelidate'
 import store from "./store/index.js";
-import axiosSetUp from './axios.js';
+import axiosSetup from "./axios";
 
-axiosSetUp();
+
 
 Vue.use(Vuex);
 Vue.use(Vuelidate)
+
+axiosSetup()
 
 Vue.config.productionTip = false
 
